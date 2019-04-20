@@ -6,5 +6,5 @@ import project.com.Entity.Document;
 @Service
 public interface DocumentService {
 
-    public void createDocument(Document document);
+    void createDocument(Document document);
 }

@@ -3,40 +3,60 @@
 <head>
     <link rel="stylesheet"
           type="text/css"
-          href="http://cdn.jsdelivr.net/webjars/bootstrap/4.1.3/css/bootstrap.min.css"
-          th:href="@{/css/bootstrap/bootstrap.css}">
-    <link rel="stylesheet"
-          type="text/css"
           th:href="@{/css/style.css}">
 
     <title>Spring Book</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
-<body class="body">
-<header th:replace="base :: header"></header>
-<div class="container" style="background: white; flex-grow: 1">
+<body style="background-color: #6088c3">
 
+<div style="background-color: #6088c3">
 
+    <div style="position: absolute; height: 300px; width: 300px; background-color: white">
+        <p>Вітаю Вас!</p>
+        <p>Це тестове завдання для Integrity Vision LLC.</p>
+        <p>Реалізовані функції:</p>
+        <p>1) Відобразити всі пакети документів клієнта по його INN(введіть INN та натисніть пошук).</p>
+        <p>2) При внесенні змін в пакет документів обновлоювати версію та створювати копію(введіть нове ім'я та
+            паспортні дані).</p>
+    </div>
     <div class="mycontainer">
         <div class="inner-container">
 
+            <form action="/" method="POST">
+                <h5>Вивести документи по INN</h5>
 
-        <form action="/greeting" class="rating" method="POST">
-            <input type="submit" id="star5" name="rating" value="5"  th:text="${rating > 4}" th:checked="${rating > 4}?'checked'"/><label for="star5" title="Rocks!"></label>
-            <input type="submit" id="star4" name="rating" value="4"  th:text="${rating > 3 && rating <= 4}" th:checked="${rating > 3 && rating <= 4}?'checked'"/><label for="star4" title="Pretty good"></label>
-            <input type="submit" id="star3" name="rating" value="3"  th:text="${rating > 2 && rating <= 3}" th:checked="${rating > 2 && rating <= 3}?'checked'" /><label for="star3" title="Meh"></label>
-            <input type="submit" id="star2" name="rating" value="2"  th:text="${rating > 1 && rating <= 2}" th:checked="${rating > 1 && rating <= 2}?'checked'"/><label for="star2" title="Kinda bad"></label>
-            <input type="submit" id="star1" name="rating" value="1"  th:text="${rating <= 1}" th:checked="${rating <= 1}?'checked'"/><label for="star1" title="Sucks big time"></label>
-        </form>
+                <div>
+                    <label>INN</label>
+                    <input id="inn" name="inn">
+                </div>
+                <div style="margin-top: 10px">
+                    <button type="submit">Пошук</button>
+                </div>
+            </form>
 
-            <p th:text="'Hello, ' + ${name} + '!'"/>
-            <p th:text="'Hello, ' + ${t} + '!'"/>
+            <form action="/edit" method="POST">
+                <h5>Змінити ім'я, паспортних даних пакету документів по INN</h5>
+
+                <div>
+                    <label>INN</label>
+                    <input name="inn">
+
+                    <label>ФИО</label>
+                    <input name="name">
+
+                    <label>Паспортні дані</label>
+                    <input name="data">
+
+                </div>
+                <div style="margin-top: 10px">
+                    <button type="submit">Змінити</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
-
-<footer th:replace="base :: footer"></footer>
-
 </body>
 </html>

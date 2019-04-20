@@ -22,7 +22,7 @@
                         <div th:text="'ИНН:'+${package.getInn()}"></div>
                         <div th:text="'Паспортные данные:'+${package.getPassport()}"></div>
                         <th:block th:each="document : ${package.getChild_component()}">
-                            <div>
+                            <div style="margin-top: 20px">
                                 <div th:text="'Номер счета:2 15'+${document.getAccountNumber()}"></div>
                                 <div th:text="'Валюта:'+${document.getCurrency()}"></div>
                                 <div th:text="'Тип продукта: '+${document.getProductType()}"></div>

@@ -12,7 +12,10 @@ public interface DocumentPackageService {
 
     List<DocumentPackage> findAllByInn(String inn);
 
+    List<DocumentPackage> findAll();
+
     DocumentPackage findFirstByInn(String inn);
+
 
 
 }

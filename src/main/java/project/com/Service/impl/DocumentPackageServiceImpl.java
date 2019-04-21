@@ -25,6 +25,11 @@ public class  DocumentPackageServiceImpl implements DocumentPackageService {
     }
 
     @Override
+    public List<DocumentPackage> findAll() {
+        return documentPackageRepository.findAll();
+    }
+
+    @Override
     public DocumentPackage findFirstByInn(String inn) {
         return documentPackageRepository.findFirstByInn(inn);
     }

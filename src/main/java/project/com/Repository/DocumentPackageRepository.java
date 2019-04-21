@@ -12,4 +12,8 @@ public interface DocumentPackageRepository extends JpaRepository<DocumentPackage
     List<DocumentPackage> findAllByInn(String inn);
 
     DocumentPackage findFirstByInn(String inn);
+
+    List<DocumentPackage> findAll();
+
+
 }

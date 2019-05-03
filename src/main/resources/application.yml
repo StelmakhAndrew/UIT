@@ -14,7 +14,7 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://localhost:5434/integrityvision
+    url: jdbc:postgresql://localhost:5434/uid
     username: postgres
     password: postgres
   jpa:

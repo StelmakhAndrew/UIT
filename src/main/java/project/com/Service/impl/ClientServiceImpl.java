@@ -7,6 +7,9 @@ import project.com.Entity.Client;
 import project.com.Repository.ClientRepository;
 import project.com.Service.ClientService;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -18,5 +21,23 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.save(client);
     }
 
+    @Override
+    public void updateClient(Client client) {
+        clientRepository.save(client);
+    }
 
+    @Override
+    public Optional<Client> findClientById(Long id) {
+        return clientRepository.findById(id);
+    }
+
+    @Override
+    public List<Client> findAllClient() {
+        return clientRepository.findAll();
+    }
+
+    @Override
+    public void deleteClient(Long id) {
+        clientRepository.deleteById(id);
+    }
 }

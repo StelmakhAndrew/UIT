@@ -10,6 +10,9 @@ import project.com.Repository.FlightRepository;
 import project.com.Service.CrewService;
 import project.com.Service.FlightService;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class FlightServiceImpl implements FlightService {
 
@@ -19,5 +22,26 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public void createFlight(Flight flight) {
         flightRepository.save(flight);
+    }
+
+    @Override
+    public void updateFlight(Flight flight) {
+        flightRepository.save(flight);
+    }
+
+    @Override
+    public Optional<Flight> findFlightById(Long id) {
+        return flightRepository.findById(id);
+    }
+
+    @Override
+    public List<Flight> findAllFlight() {
+        return flightRepository.findAll();
+    }
+
+    @Override
+    public void deleteFlight(Long id) {
+        flightRepository.deleteById(id);
+
     }
 }

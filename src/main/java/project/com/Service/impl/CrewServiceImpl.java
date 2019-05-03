@@ -10,6 +10,9 @@ import project.com.Repository.CrewRepository;
 import project.com.Service.ClientService;
 import project.com.Service.CrewService;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CrewServiceImpl implements CrewService {
 
@@ -19,5 +22,25 @@ public class CrewServiceImpl implements CrewService {
     @Override
     public void createCrew(Crew crew) {
         crewRepository.save(crew);
+    }
+
+    @Override
+    public void updateCrew(Crew crew) {
+        crewRepository.save(crew);
+    }
+
+    @Override
+    public Optional<Crew> findCrewById(Long id) {
+        return crewRepository.findById(id);
+    }
+
+    @Override
+    public List<Crew> findAllCrew() {
+        return crewRepository.findAll();
+    }
+
+    @Override
+    public void deleteCrew(Long id) {
+        crewRepository.deleteById(id);
     }
 }

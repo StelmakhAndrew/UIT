@@ -29,7 +29,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/persons/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Person> deletePerson(@RequestParam("id") Long id) {
+    public ResponseEntity<Person> deletePerson(@PathVariable("id") Long id) {
         personService.deletePerson(id);
         return ResponseEntity.noContent().build();
     }

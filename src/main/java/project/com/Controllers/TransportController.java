@@ -29,7 +29,7 @@ public class TransportController {
     }
 
     @RequestMapping(value = "/transports/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteTransports(@RequestParam("id") Long id) {
+    public ResponseEntity<Object> deleteTransports(@PathVariable("id") Long id) {
         transportService.deleteTransport(id);
         return ResponseEntity.noContent().build();
     }

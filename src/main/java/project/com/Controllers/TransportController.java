@@ -26,19 +26,23 @@ public class TransportController {
 
     @RequestMapping(value = "/transports/{id}", method = RequestMethod.GET)
     public ResponseEntity<TransportDTO> getTransport(@PathVariable("id") Long id) {
-        TransportDTO transportDTO = new TransportDTO(transportService.findTransportById(id).orElse(null));
+        Transport transport = transportService.findTransportById(id);
+        if (transport == null) return ResponseEntity.notFound().build();
+        TransportDTO transportDTO = new TransportDTO(transport);
         return ResponseEntity.ok(transportDTO);
     }
 
     @RequestMapping(value = "/transports/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteTransports(@PathVariable("id") Long id) {
+        Transport transport = transportService.findTransportById(id);
+        if (transport == null) return ResponseEntity.notFound().build();
         transportService.deleteTransport(id);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/transports/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<TransportDTO> updateTransports(@RequestBody Transport transport, @PathVariable Long id) {
-        Transport oldTransport = transportService.findTransportById(id).orElse(null);
+        Transport oldTransport = transportService.findTransportById(id);
         if (oldTransport == null) {
             return ResponseEntity.notFound().build();
         } else {

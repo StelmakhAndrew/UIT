@@ -25,9 +25,10 @@ public class TransportServiceImpl implements TransportService {
     public void updateTransport(Transport transport) {
         transportRepository.save(transport);
     }
+
     @Override
-    public Optional<Transport> findTransportById(Long id) {
-        return transportRepository.findById(id);
+    public Transport findTransportById(Long id) {
+        return transportRepository.findById(id).orElse(null);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface CrewService {
 
     void updateCrew(Crew crew);
 
-    Optional<Crew> findCrewById(Long id);
+    Crew findCrewById(Long id);
 
     List<Crew> findAllCrew();
 

@@ -30,8 +30,8 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Optional<Flight> findFlightById(Long id) {
-        return flightRepository.findById(id);
+    public Flight findFlightById(Long id) {
+        return flightRepository.findById(id).orElse(null);
     }
 
     @Override

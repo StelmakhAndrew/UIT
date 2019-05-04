@@ -14,7 +14,7 @@ public interface TransportService {
 
     void updateTransport(Transport transport);
 
-    Optional<Transport> findTransportById(Long id);
+    Transport findTransportById(Long id);
 
     List<Transport> findAllTransport();
 

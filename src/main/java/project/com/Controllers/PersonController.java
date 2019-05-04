@@ -8,9 +8,8 @@ import project.com.Entity.DTO.PersonDTO;
 import project.com.Entity.Person;
 import project.com.Service.PersonService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -28,19 +27,24 @@ public class PersonController {
 
     @RequestMapping(value = "/persons/{id}", method = RequestMethod.GET)
     public ResponseEntity<PersonDTO> getPerson(@PathVariable("id") Long id) {
-        PersonDTO person = new PersonDTO(Objects.requireNonNull(personService.findPersonById(id).orElse(null)));
-        return ResponseEntity.ok(person);
+
+        Person person = personService.findPersonById(id);
+        if (person == null) return ResponseEntity.notFound().build();
+        PersonDTO personDTO = new PersonDTO(person);
+        return ResponseEntity.ok(personDTO);
     }
 
     @RequestMapping(value = "/persons/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<PersonDTO> deletePerson(@PathVariable("id") Long id) {
+        Person person = personService.findPersonById(id);
+        if (person == null) return ResponseEntity.notFound().build();
         personService.deletePerson(id);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/persons/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<PersonDTO> update(@RequestBody Person person, @PathVariable Long id) {
-        Person oldPerson = personService.findPersonById(id).orElse(null);
+        Person oldPerson = personService.findPersonById(id);
         if (oldPerson == null) {
             return ResponseEntity.notFound().build();
         } else {

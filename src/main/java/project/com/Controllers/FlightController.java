@@ -27,19 +27,23 @@ public class FlightController {
 
     @RequestMapping(value = "/flights/{id}", method = RequestMethod.GET)
     public ResponseEntity<FlightDTO> getFlight(@PathVariable("id") Long id) {
-        FlightDTO flightDTO = new FlightDTO(flightService.findFlightById(id).orElse(null));
+        Flight flight = flightService.findFlightById(id);
+        if (flight ==null) return ResponseEntity.notFound().build();
+        FlightDTO flightDTO = new FlightDTO(flight);
         return ResponseEntity.ok(flightDTO);
     }
 
     @RequestMapping(value = "/flights/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<FlightDTO> deleteFlight(@PathVariable("id") Long id) {
+        Flight flight = flightService.findFlightById(id);
+        if (flight ==null) return ResponseEntity.notFound().build();
         flightService.deleteFlight(id);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/flights/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody Flight flight, @PathVariable Long id) {
-        Flight oldFlight = flightService.findFlightById(id).orElse(null);
+        Flight oldFlight = flightService.findFlightById(id);
         if (oldFlight == null) {
             return ResponseEntity.notFound().build();
         } else {

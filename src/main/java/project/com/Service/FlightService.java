@@ -14,7 +14,7 @@ public interface FlightService {
 
     void updateFlight(Flight flight);
 
-    Optional<Flight> findFlightById(Long id);
+    Flight findFlightById(Long id);
 
     List<Flight> findAllFlight();
 

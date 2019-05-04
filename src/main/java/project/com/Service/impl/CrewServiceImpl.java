@@ -30,8 +30,8 @@ public class CrewServiceImpl implements CrewService {
     }
 
     @Override
-    public Optional<Crew> findCrewById(Long id) {
-        return crewRepository.findById(id);
+    public Crew findCrewById(Long id) {
+        return crewRepository.findById(id).orElse(null);
     }
 
     @Override

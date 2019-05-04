@@ -36,19 +36,25 @@ public class ClientController {
 
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.GET)
     public ResponseEntity<ClientDTO> getClient(@PathVariable("id") Long id) {
-        ClientDTO clientDTO = new ClientDTO(clientService.findClientById(id).orElse(null));
+        Client client = clientService.findClientById(id);
+        if (client == null)
+            return ResponseEntity.notFound().build();
+        ClientDTO clientDTO = new ClientDTO(client);
         return ResponseEntity.ok(clientDTO);
     }
 
     @RequestMapping(value = "/clients/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ClientDTO> deleteClient(@PathVariable("id") Long id) {
+        Client client = clientService.findClientById(id);
+        if (client == null)
+            return ResponseEntity.notFound().build();
         clientService.deleteClient(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/clients/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ClientDTO> updateClient(@RequestBody Client client, @PathVariable Long id) {
-        Client oldClient = clientService.findClientById(id).orElse(null);
+        Client oldClient = clientService.findClientById(id);
         if (oldClient == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -60,6 +66,7 @@ public class ClientController {
 
     @RequestMapping(value = "/addClient", method = RequestMethod.GET)
     public ResponseEntity<ClientDTO> addClient(Client client) {
+        if (client == null) return ResponseEntity.noContent().build();
         clientService.createClient(client);
         ClientDTO clientDTO = new ClientDTO(client);
         return ResponseEntity.ok(clientDTO);
@@ -67,8 +74,8 @@ public class ClientController {
 
     @RequestMapping(value = "/clients/{id}/crew/{crewId}", method = RequestMethod.GET)
     public ResponseEntity<ClientDTO> addCrewToClient(@PathVariable Long crewId, @PathVariable Long id) {
-        Client client = clientService.findClientById(id).orElse(null);
-        Crew crew = crewService.findCrewById(crewId).orElse(null);
+        Client client = clientService.findClientById(id);
+        Crew crew = crewService.findCrewById(crewId);
         if (client == null || crew == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -82,8 +89,8 @@ public class ClientController {
 
     @RequestMapping(value = "/clients/{id}/transport/{transportId}", method = RequestMethod.GET)
     public ResponseEntity<ClientDTO> addTransportToClient(@PathVariable Long transportId, @PathVariable Long id) {
-        Client client = clientService.findClientById(id).orElse(null);
-        Transport transport = transportService.findTransportById(transportId).orElse(null);
+        Client client = clientService.findClientById(id);
+        Transport transport = transportService.findTransportById(transportId);
         if (client == null || transport == null) {
             return ResponseEntity.notFound().build();
         } else {

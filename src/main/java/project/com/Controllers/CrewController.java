@@ -38,19 +38,24 @@ public class CrewController {
 
     @RequestMapping(value = "/crews/{id}", method = RequestMethod.GET)
     public ResponseEntity<CrewDTO> getCrew(@PathVariable("id") Long id) {
-        CrewDTO crewDTO = new CrewDTO(crewService.findCrewById(id).orElse(null));
+        Crew crew = crewService.findCrewById(id);
+        if (crew == null) return ResponseEntity.notFound().build();
+        CrewDTO crewDTO = new CrewDTO(crew);
         return ResponseEntity.ok(crewDTO);
     }
 
     @RequestMapping(value = "/crews/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<CrewDTO> deleteCrew(@PathVariable("id") Long id) {
+        Crew crew = crewService.findCrewById(id);
+        if (crew == null) return ResponseEntity.notFound().build();
+
         crewService.deleteCrew(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/crews/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> updateCrew(@RequestBody Crew crew, @PathVariable Long id) {
-        Crew oldCrew = crewService.findCrewById(id).orElse(null);
+        Crew oldCrew = crewService.findCrewById(id);
         if (oldCrew == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -62,6 +67,7 @@ public class CrewController {
 
     @RequestMapping(value = "/addCrew", method = RequestMethod.GET)
     public ResponseEntity<CrewDTO> addCrew(Crew crew) {
+        if (crew == null) return ResponseEntity.noContent().build();
         crewService.createCrew(crew);
         CrewDTO crewDTO = new CrewDTO(crew);
         return ResponseEntity.ok(crewDTO);
@@ -70,8 +76,8 @@ public class CrewController {
     @RequestMapping(value = "/crews/{id}/person/{personId}", method = RequestMethod.GET)
     public ResponseEntity<CrewDTO> addPersonToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("personId") Long personId) {
-        Crew crew = crewService.findCrewById(id).orElse(null);
-        Person person = personService.findPersonById(personId).orElse(null);
+        Crew crew = crewService.findCrewById(id);
+        Person person = personService.findPersonById(personId);
         if (crew == null || person == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -86,8 +92,8 @@ public class CrewController {
     @RequestMapping(value = "/crews/{id}/transport/{transportId}", method = RequestMethod.GET)
     public ResponseEntity<CrewDTO> addTransportToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("transportId") Long transportId) {
-        Crew crew = crewService.findCrewById(id).orElse(null);
-        Transport transport = transportService.findTransportById(transportId).orElse(null);
+        Crew crew = crewService.findCrewById(id);
+        Transport transport = transportService.findTransportById(transportId);
         if (crew == null || transport == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -102,8 +108,8 @@ public class CrewController {
     @RequestMapping(value = "/crews/{id}/flight/{flightId}", method = RequestMethod.GET)
     public ResponseEntity<CrewDTO> addFlightToCrew(@PathVariable("id") Long id,
                                                    @PathVariable("flightId") Long flightId) {
-        Crew crew = crewService.findCrewById(id).orElse(null);
-        Flight flight = flightService.findFlightById(flightId).orElse(null);
+        Crew crew = crewService.findCrewById(id);
+        Flight flight = flightService.findFlightById(flightId);
         if (crew == null || flight == null) {
             return ResponseEntity.notFound().build();
         } else {

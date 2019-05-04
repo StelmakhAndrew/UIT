@@ -10,6 +10,9 @@ import project.com.Service.TransportService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * реалізація сервісу
+ */
 @Service
 public class TransportServiceImpl implements TransportService {
 

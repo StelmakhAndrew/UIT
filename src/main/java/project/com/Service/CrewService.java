@@ -7,6 +7,9 @@ import project.com.Entity.Crew;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * сервіс для екіпажу
+ */
 @Service
 public interface CrewService {
 

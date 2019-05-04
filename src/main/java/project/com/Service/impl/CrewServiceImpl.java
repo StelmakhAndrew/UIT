@@ -13,6 +13,9 @@ import project.com.Service.CrewService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * реалізація сервісу
+ */
 @Service
 public class CrewServiceImpl implements CrewService {
 

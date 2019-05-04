@@ -7,6 +7,9 @@ import project.com.Entity.Person;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * сервіс для персони
+ */
 @Service
 public interface PersonService {
 

@@ -10,6 +10,9 @@ import project.com.Service.ClientService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * реалізація сервісу
+ */
 @Service
 public class ClientServiceImpl implements ClientService {
 

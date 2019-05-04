@@ -13,6 +13,9 @@ import project.com.Service.FlightService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * реалізація сервісу
+ */
 @Service
 public class FlightServiceImpl implements FlightService {
 

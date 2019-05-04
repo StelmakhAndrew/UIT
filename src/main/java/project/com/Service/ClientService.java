@@ -7,6 +7,9 @@ import project.com.Entity.Transport;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * сервіс для клієнта
+ */
 @Service
 public interface ClientService {
 

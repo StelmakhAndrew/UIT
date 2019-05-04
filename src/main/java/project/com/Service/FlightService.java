@@ -7,6 +7,9 @@ import project.com.Entity.Flight;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * сервіс для маршруту
+ */
 @Service
 public interface FlightService {
 

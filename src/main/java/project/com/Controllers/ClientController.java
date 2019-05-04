@@ -64,15 +64,15 @@ public class ClientController {
         }
     }
 
-    @RequestMapping(value = "/addClient", method = RequestMethod.GET)
-    public ResponseEntity<ClientDTO> addClient(Client client) {
+    @RequestMapping(value = "/addClient", method = RequestMethod.POST)
+    public ResponseEntity<ClientDTO> addClient(@RequestBody Client client) {
         if (client == null) return ResponseEntity.noContent().build();
         clientService.createClient(client);
         ClientDTO clientDTO = new ClientDTO(client);
         return ResponseEntity.ok(clientDTO);
     }
 
-    @RequestMapping(value = "/clients/{id}/crew/{crewId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/clients/{id}/crew/{crewId}", method = RequestMethod.PUT)
     public ResponseEntity<ClientDTO> addCrewToClient(@PathVariable Long crewId, @PathVariable Long id) {
         Client client = clientService.findClientById(id);
         Crew crew = crewService.findCrewById(crewId);
@@ -87,7 +87,7 @@ public class ClientController {
         }
     }
 
-    @RequestMapping(value = "/clients/{id}/transport/{transportId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/clients/{id}/transport/{transportId}", method = RequestMethod.PUT)
     public ResponseEntity<ClientDTO> addTransportToClient(@PathVariable Long transportId, @PathVariable Long id) {
         Client client = clientService.findClientById(id);
         Transport transport = transportService.findTransportById(transportId);

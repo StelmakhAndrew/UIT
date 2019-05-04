@@ -54,8 +54,8 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(value = "/addPerson", method = RequestMethod.GET)
-    public ResponseEntity<PersonDTO> addPerson(Person person) {
+    @RequestMapping(value = "/addPerson", method = RequestMethod.POST)
+    public ResponseEntity<PersonDTO> addPerson(@RequestBody Person person) {
         personService.createPerson(person);
         PersonDTO personDTO = new PersonDTO(person);
         return ResponseEntity.ok(personDTO);

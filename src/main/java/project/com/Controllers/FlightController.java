@@ -53,8 +53,8 @@ public class FlightController {
         }
     }
 
-    @RequestMapping(value = "/addFlight", method = RequestMethod.GET)
-    public ResponseEntity<FlightDTO> addClient(Flight flight) {
+    @RequestMapping(value = "/addFlight", method = RequestMethod.POST)
+    public ResponseEntity<FlightDTO> addClient(@RequestBody Flight flight) {
         flightService.createFlight(flight);
         FlightDTO flightDTO = new FlightDTO(flight);
         return ResponseEntity.ok(flightDTO);

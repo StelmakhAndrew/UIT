@@ -52,8 +52,8 @@ public class TransportController {
         }
     }
 
-    @RequestMapping(value = "/addTransport", method = RequestMethod.GET)
-    public ResponseEntity<TransportDTO> addPerson(Transport transport) {
+    @RequestMapping(value = "/addTransport", method = RequestMethod.POST)
+    public ResponseEntity<TransportDTO> addPerson(@RequestBody Transport transport) {
         transportService.createTransport(transport);
         TransportDTO transportDTO = new TransportDTO(transport);
         return ResponseEntity.ok(transportDTO);

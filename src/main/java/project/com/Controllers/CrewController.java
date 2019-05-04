@@ -65,15 +65,15 @@ public class CrewController {
         }
     }
 
-    @RequestMapping(value = "/addCrew", method = RequestMethod.GET)
-    public ResponseEntity<CrewDTO> addCrew(Crew crew) {
+    @RequestMapping(value = "/addCrew", method = RequestMethod.POST)
+    public ResponseEntity<CrewDTO> addCrew(@RequestBody Crew crew) {
         if (crew == null) return ResponseEntity.noContent().build();
         crewService.createCrew(crew);
         CrewDTO crewDTO = new CrewDTO(crew);
         return ResponseEntity.ok(crewDTO);
     }
 
-    @RequestMapping(value = "/crews/{id}/person/{personId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crews/{id}/person/{personId}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addPersonToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("personId") Long personId) {
         Crew crew = crewService.findCrewById(id);
@@ -89,7 +89,7 @@ public class CrewController {
         }
     }
 
-    @RequestMapping(value = "/crews/{id}/transport/{transportId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crews/{id}/transport/{transportId}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addTransportToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("transportId") Long transportId) {
         Crew crew = crewService.findCrewById(id);
@@ -105,7 +105,7 @@ public class CrewController {
         }
     }
 
-    @RequestMapping(value = "/crews/{id}/flight/{flightId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crews/{id}/flight/{flightId}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addFlightToCrew(@PathVariable("id") Long id,
                                                    @PathVariable("flightId") Long flightId) {
         Crew crew = crewService.findCrewById(id);

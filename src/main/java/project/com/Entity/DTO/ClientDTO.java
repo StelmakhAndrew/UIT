@@ -4,20 +4,30 @@ import project.com.Entity.Client;
 import project.com.Entity.Crew;
 import project.com.Entity.Transport;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Реалізація патерну DTO.
+ * Створений для передачі даних,
+ * для зручності в серіалізації об'єкта "клієнт" в формат Json
+ * та уникнення зацикленості при поглибленій серіалізації.
+ */
 public class ClientDTO {
 
     private Long id;
 
     private String name;
 
-    private List<Long> crewsId = new ArrayList<>();
+    private List<Long> crewsId;
 
-    private List<Long> transportsId = new ArrayList<>();
+    private List<Long> transportsId;
 
+    /**
+     * @param client
+     * Конструктор для створення об'єкту ClientDTO з об'єкта Client
+     * з отриманням необхідних полів.
+     */
     public ClientDTO(Client client) {
         this.id = client.getId();
         this.name = client.getName();

@@ -2,8 +2,12 @@ package project.com.Entity.DTO;
 
 import project.com.Entity.Person;
 
-import java.util.Optional;
-
+/**
+ * Реалізація патерну DTO.
+ * Створений для передачі даних,
+ * для зручності в серіалізації об'єкта "персона" в формат Json
+ * та уникнення зацикленості при поглибленій серіалізації.
+ */
 public class PersonDTO {
 
     private Long id;
@@ -14,6 +18,11 @@ public class PersonDTO {
 
     private Long crewId;
 
+    /**
+     * @param person
+     * Конструктор для створення об'єкту PersonDTO з об'єкта Person
+     * з отриманням необхідних полів.
+     */
     public PersonDTO(Person person) {
         this.id = person.getId();
         this.firstName = person.getFirstName();

@@ -1,9 +1,14 @@
 package project.com.Entity.DTO;
 
-import project.com.Entity.Crew;
+
 import project.com.Entity.Flight;
 
-
+/**
+ * Реалізація патерну DTO.
+ * Створений для передачі даних,
+ * для зручності в серіалізації об'єкта "маршрут" в формат Json
+ * та уникнення зацикленості при поглибленій серіалізації.
+ */
 public class FlightDTO {
 
     private Long id;
@@ -12,6 +17,11 @@ public class FlightDTO {
 
     private Long crewId;
 
+    /**
+     * @param flight
+     * Конструктор для створення об'єкту FlightDTO з об'єкта Flight
+     * з отриманням необхідних полів.
+     */
     public FlightDTO(Flight flight) {
         this.id = flight.getId();
         this.name = flight.getName();

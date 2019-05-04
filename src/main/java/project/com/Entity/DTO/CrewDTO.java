@@ -2,22 +2,33 @@ package project.com.Entity.DTO;
 
 import project.com.Entity.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Реалізація патерну DTO.
+ * Створений для передачі даних,
+ * для зручності в серіалізації об'єкта "экіпаж" в формат Json
+ * та уникнення зацикленості при поглибленій серіалізації.
+ */
 public class CrewDTO {
 
     private Long id;
 
-    private List<Long> personsId = new ArrayList<>();
+    private List<Long> personsId;
 
-    private List<Long> transportId = new ArrayList<>();
+    private List<Long> transportId;
 
-    private Long flightId = null;
+    private Long flightId;
 
-    private Long clientId = null;
+    private Long clientId;
 
+    /**
+     * @param crew
+     * Конструктор для створення об'єкту CrewDTO з об'єкта Crew
+     * з отриманням необхідних полів.
+     */
     public CrewDTO(Crew crew) {
         this.id = crew.getId();
         this.personsId = crew.getPersons().stream().map(Person::getId).collect(Collectors.toList());

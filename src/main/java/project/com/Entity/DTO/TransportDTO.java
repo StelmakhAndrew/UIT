@@ -1,12 +1,13 @@
 package project.com.Entity.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import project.com.Entity.Client;
-import project.com.Entity.Crew;
 import project.com.Entity.Transport;
 
-import javax.persistence.*;
-
+/**
+ * Реалізація патерну DTO.
+ * Створений для передачі даних,
+ * для зручності в серіалізації об'єкта "транспорт" в формат Json
+ * та уникнення зацикленості при поглибленій серіалізації.
+ */
 public class TransportDTO {
 
     private Long id;
@@ -23,6 +24,11 @@ public class TransportDTO {
 
     private String photoUrl;
 
+    /**
+     * @param transport
+     * Конструктор для створення об'єкту TransportDTO з об'єкта Transport
+     * з отриманням необхідних полів.
+     */
     public TransportDTO(Transport transport) {
         this.id = transport.getId();
         this.crewId = transport.getCrew()!=null?transport.getCrew().getId():null;

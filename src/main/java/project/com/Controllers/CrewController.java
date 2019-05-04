@@ -5,12 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.com.Entity.*;
+import project.com.Entity.DTO.CrewDTO;
 import project.com.Service.CrewService;
 import project.com.Service.FlightService;
 import project.com.Service.PersonService;
 import project.com.Service.TransportService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -29,42 +31,44 @@ public class CrewController {
     private FlightService flightService;
 
     @RequestMapping(value = "/crews", method = RequestMethod.GET)
-    public ResponseEntity<List<Crew>> getAllCrew() {
-        List<Crew> crew = crewService.findAllCrew();
-        return ResponseEntity.ok(crew);
+    public ResponseEntity<List<CrewDTO>> getAllCrew() {
+        List<CrewDTO> crewDTOs = crewService.findAllCrew().stream().map(CrewDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(crewDTOs);
     }
 
     @RequestMapping(value = "/crews/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Crew> getCrew(@PathVariable("id") Long id) {
-        Crew crew = crewService.findCrewById(id).orElse(null);
-        return ResponseEntity.ok(crew);
+    public ResponseEntity<CrewDTO> getCrew(@PathVariable("id") Long id) {
+        CrewDTO crewDTO = new CrewDTO(crewService.findCrewById(id).orElse(null));
+        return ResponseEntity.ok(crewDTO);
     }
 
     @RequestMapping(value = "/crews/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Crew> deleteCrew(@PathVariable("id") Long id) {
+    public ResponseEntity<CrewDTO> deleteCrew(@PathVariable("id") Long id) {
         crewService.deleteCrew(id);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/crews/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Crew> updateCrew(@RequestBody Crew crew, @PathVariable Long id) {
+    public ResponseEntity<CrewDTO> updateCrew(@RequestBody Crew crew, @PathVariable Long id) {
         Crew oldCrew = crewService.findCrewById(id).orElse(null);
         if (oldCrew == null) {
             return ResponseEntity.notFound().build();
         } else {
             crewService.updateCrew(crew);
-            return ResponseEntity.ok(crew);
+            CrewDTO crewDTO = new CrewDTO(crew);
+            return ResponseEntity.ok(crewDTO);
         }
     }
 
-    @RequestMapping(value = "/addCrew", method = RequestMethod.POST)
-    public ResponseEntity<Crew> addCrew(@RequestBody Crew crew) {
+    @RequestMapping(value = "/addCrew", method = RequestMethod.GET)
+    public ResponseEntity<CrewDTO> addCrew(Crew crew) {
         crewService.createCrew(crew);
-        return ResponseEntity.ok(crew);
+        CrewDTO crewDTO = new CrewDTO(crew);
+        return ResponseEntity.ok(crewDTO);
     }
 
     @RequestMapping(value = "/crews/{id}/person/{personId}", method = RequestMethod.GET)
-    public ResponseEntity<Crew> addPersonToCrew(@PathVariable("id") Long id,
+    public ResponseEntity<CrewDTO> addPersonToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("personId") Long personId) {
         Crew crew = crewService.findCrewById(id).orElse(null);
         Person person = personService.findPersonById(personId).orElse(null);
@@ -74,12 +78,13 @@ public class CrewController {
             crew.addPerson(person);
             person.setCrew(crew);
             crewService.updateCrew(crew);
-            return ResponseEntity.ok(crew);
+            CrewDTO crewDTO = new CrewDTO(crew);
+            return ResponseEntity.ok(crewDTO);
         }
     }
 
     @RequestMapping(value = "/crews/{id}/transport/{transportId}", method = RequestMethod.GET)
-    public ResponseEntity<Crew> addTransportToCrew(@PathVariable("id") Long id,
+    public ResponseEntity<CrewDTO> addTransportToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("transportId") Long transportId) {
         Crew crew = crewService.findCrewById(id).orElse(null);
         Transport transport = transportService.findTransportById(transportId).orElse(null);
@@ -89,12 +94,13 @@ public class CrewController {
             crew.addTransport(transport);
             transport.setCrew(crew);
             crewService.updateCrew(crew);
-            return ResponseEntity.ok(crew);
+            CrewDTO crewDTO = new CrewDTO(crew);
+            return ResponseEntity.ok(crewDTO);
         }
     }
 
     @RequestMapping(value = "/crews/{id}/flight/{flightId}", method = RequestMethod.GET)
-    public ResponseEntity<Crew> addFlightToCrew(@PathVariable("id") Long id,
+    public ResponseEntity<CrewDTO> addFlightToCrew(@PathVariable("id") Long id,
                                                    @PathVariable("flightId") Long flightId) {
         Crew crew = crewService.findCrewById(id).orElse(null);
         Flight flight = flightService.findFlightById(flightId).orElse(null);
@@ -104,7 +110,8 @@ public class CrewController {
             crew.setFlight(flight);
             flight.setCrew(crew);
             crewService.updateCrew(crew);
-            return ResponseEntity.ok(crew);
+            CrewDTO crewDTO = new CrewDTO(crew);
+            return ResponseEntity.ok(crewDTO);
         }
     }
 }

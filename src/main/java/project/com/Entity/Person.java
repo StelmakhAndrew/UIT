@@ -1,5 +1,6 @@
 package project.com.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -22,8 +23,7 @@ public class Person {
     private String secondName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @JsonIgnore
+    @JoinColumn(name = "crew_id")
     private Crew crew;
 
     public Long getId() {

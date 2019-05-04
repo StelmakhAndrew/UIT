@@ -1,6 +1,7 @@
 package project.com.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ public class Crew {
     @Column(name = "id")
     private Long id;
 
-
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Person> persons = new ArrayList<>();
 
@@ -28,7 +28,6 @@ public class Crew {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "client_crews",joinColumns = @JoinColumn(name = "crew"),
             inverseJoinColumns = @JoinColumn(name = "client"))
-    @JsonIgnore
     private Client client;
 
     public Long getId() {

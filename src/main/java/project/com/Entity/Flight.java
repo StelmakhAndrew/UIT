@@ -20,7 +20,6 @@ public class Flight {
 
 
     @OneToOne(mappedBy = "flight",fetch = FetchType.LAZY)
-    @JsonIgnore
     private Crew crew;
 
     public Flight() {

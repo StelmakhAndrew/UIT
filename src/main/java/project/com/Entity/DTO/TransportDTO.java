@@ -1,38 +1,37 @@
-package project.com.Entity;
+package project.com.Entity.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import project.com.Entity.Client;
+import project.com.Entity.Crew;
+import project.com.Entity.Transport;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "транспорт")
-public class Transport {
+public class TransportDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Crew crew;
+    private Long crewId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "client_transport",joinColumns = @JoinColumn(name = "transports"),
-            inverseJoinColumns = @JoinColumn(name = "client"))
-    private Client client;
+    private Long clientId;
 
-    @Column(name = "model")
     private String model;
 
-    @Column(name = "productionYear")
     private Integer productionYear;
 
-    @Column(name = "mileage")
     private Integer mileage;
 
-    @Column(name = "photoUrl")
     private String photoUrl;
+
+    public TransportDTO(Transport transport) {
+        this.id = transport.getId();
+        this.crewId = transport.getCrew()!=null?transport.getCrew().getId():null;
+        this.clientId = transport.getClient()!=null?transport.getClient().getId():null;
+        this.model = transport.getModel();
+        this.productionYear = transport.getProductionYear();
+        this.mileage = transport.getMileage();
+        this.photoUrl = transport.getPhotoUrl();
+    }
 
     public Long getId() {
         return id;
@@ -42,12 +41,20 @@ public class Transport {
         this.id = id;
     }
 
-    public Crew getCrew() {
-        return crew;
+    public Long getCrewId() {
+        return crewId;
     }
 
-    public void setCrew(Crew crew) {
-        this.crew = crew;
+    public void setCrewId(Long crewId) {
+        this.crewId = crewId;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
     public String getModel() {
@@ -80,13 +87,5 @@ public class Transport {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 }

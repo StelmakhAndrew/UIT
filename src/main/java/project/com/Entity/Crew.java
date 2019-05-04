@@ -1,8 +1,5 @@
 package project.com.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +23,7 @@ public class Crew {
     private Flight flight;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "client_crews",joinColumns = @JoinColumn(name = "crew"),
-            inverseJoinColumns = @JoinColumn(name = "client"))
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public Long getId() {

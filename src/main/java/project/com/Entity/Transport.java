@@ -18,8 +18,7 @@ public class Transport {
     private Crew crew;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "client_transport",joinColumns = @JoinColumn(name = "transports"),
-            inverseJoinColumns = @JoinColumn(name = "client"))
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @Column(name = "model")

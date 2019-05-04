@@ -13,11 +13,8 @@ public class Flight {
     @Column(name = "id")
     private Long id;
 
-
     @Column(name = "name")
     private String name;
-
-
 
     @OneToOne(mappedBy = "flight",fetch = FetchType.LAZY)
     private Crew crew;

@@ -47,12 +47,20 @@ public class Crew {
         this.persons = persons;
     }
 
+    public void addPerson(Person person) {
+        this.persons.add(person);
+    }
+
     public List<Transport> getTransport() {
         return transport;
     }
 
     public void setTransport(List<Transport> transport) {
         this.transport = transport;
+    }
+
+    public void addTransport(Transport transport) {
+        this.transport.add(transport);
     }
 
     public Flight getFlight() {

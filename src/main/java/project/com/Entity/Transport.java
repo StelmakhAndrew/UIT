@@ -15,6 +15,7 @@ public class Transport {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
+    @JsonIgnore
     private Crew crew;
 
     @ManyToOne(fetch = FetchType.LAZY)

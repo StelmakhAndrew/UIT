@@ -1,8 +1,8 @@
 package project.com.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "рейс")
@@ -20,8 +20,11 @@ public class Flight {
 
 
     @OneToOne(mappedBy = "flight",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Crew crew;
 
+    public Flight() {
+    }
 
     public Flight(String name) {
         this.name = name;

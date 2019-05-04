@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Клас-Entity для об'єкта клієнт
+ * містить поля клієнта та гетери, сетери, контруктори
+ */
 @Entity
 @Table(name = "клиент")
 public class Client {
@@ -16,9 +20,17 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    /**
+     * Зв'язок багато до одного.
+     * Означає, що клієнт може мати багато єкіпажів.
+     */
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Crew> crews = new ArrayList<>();
 
+    /**
+     * Зв'язок багато до одного.
+     * Означає, що клієнт може мати багато транспортів.
+     */
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transport> transports = new ArrayList<>();
 

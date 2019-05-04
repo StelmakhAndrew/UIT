@@ -1,9 +1,11 @@
 package project.com.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
+/**
+ * Клас-Entity для об'єкта маршрут
+ * містить поля маршруту та гетери, сетери, контруктори
+ */
 @Entity
 @Table(name = "рейс")
 public class Flight {
@@ -16,6 +18,10 @@ public class Flight {
     @Column(name = "name")
     private String name;
 
+    /**
+     * Зв'язок один до одного.
+     * Означає, що екіпаж може мати тільки один маршрут.
+     */
     @OneToOne(mappedBy = "flight",fetch = FetchType.LAZY)
     private Crew crew;
 

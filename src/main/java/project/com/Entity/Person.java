@@ -1,10 +1,11 @@
 package project.com.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
+/**
+ * Клас-Entity для об'єкта персона
+ * містить поля персони та гетери, сетери, контруктори
+ */
 @Entity
 @Table(name = "человек")
 public class Person {
@@ -14,14 +15,16 @@ public class Person {
     @Column(name = "id")
     private Long id;
 
-
     @Column(name = "firstName")
     private String firstName;
-
 
     @Column(name = "secondName")
     private String secondName;
 
+    /**
+     * Зв'язок багато до одного.
+     * Означає, що декілька персон можуть бути в одному екіпажі.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "crew_id")
     private Crew crew;

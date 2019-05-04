@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Клас-Entity для об'єкта екіпаж
+ * містить поля екіпажу та гетери, сетери, контруктори
+ */
 @Entity
 @Table(name = "экипаж")
 public class Crew {
@@ -13,15 +17,31 @@ public class Crew {
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Зв'язок один до багатьох.
+     * Означає, що екіпаж може мати багато персон.
+     */
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Person> persons = new ArrayList<>();
 
+    /**
+     * Зв'язок один до багатьох.
+     * Означає, що екіпаж може володіти багатьма транспортами.
+     */
     @OneToMany(mappedBy = "crew" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transport> transport = new ArrayList<>();
 
+    /**
+     * Зв'язок один до одного.
+     * Означає, що екіпаж може мати тільки один маршрут.
+     */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Flight flight;
 
+    /**
+     * Зв'язок багато до одного.
+     * Означає, що у декількох екіпажів може бути один і той же клієнт.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;

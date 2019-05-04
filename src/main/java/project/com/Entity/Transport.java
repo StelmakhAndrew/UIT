@@ -1,9 +1,11 @@
 package project.com.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
+/**
+ * Клас-Entity для об'єкта транспорт
+ * містить поля транспорту та гетери, сетери, контруктори
+ */
 @Entity
 @Table(name = "транспорт")
 public class Transport {
@@ -13,10 +15,18 @@ public class Transport {
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Зв'язок багато до одного.
+     * Означає, що декілька транспортів можуть бути в одному екіпажі.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Crew crew;
 
+    /**
+     * Зв'язок багато до одного.
+     * Означає, що декілька транспортів можуть бути в одного клієнта.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;

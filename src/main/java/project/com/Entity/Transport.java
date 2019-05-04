@@ -1,5 +1,7 @@
 package project.com.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +18,9 @@ public class Transport {
     private Crew crew;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinTable(name = "client_transport",joinColumns = @JoinColumn(name = "transports"),
+            inverseJoinColumns = @JoinColumn(name = "client"))
+    @JsonIgnore
     private Client client;
 
     @Column(name = "model")

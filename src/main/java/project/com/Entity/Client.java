@@ -13,15 +13,17 @@ public class Client {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private List<Crew> crews = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transport> transports = new ArrayList<>();
 
-    @Column(name = "name")
-    private String name;
+    public Client() {
+    }
 
     public Client(String name) {
         this.name = name;
@@ -51,11 +53,19 @@ public class Client {
         this.crews = crews;
     }
 
+    public void addCrews(Crew crew) {
+        this.crews.add(crew);
+    }
+
     public List<Transport> getTransports() {
         return transports;
     }
 
     public void setTransports(List<Transport> transports) {
         this.transports = transports;
+    }
+
+    public void addTransport(Transport transport) {
+        this.transports.add(transport);
     }
 }

@@ -27,6 +27,11 @@ public class ApplicationTest {
 
     @Test
     public void shouldReturnDefaultMessage() throws Exception {
+        this.mockMvc.perform(get("/clients")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnDefaultMessages() throws Exception {
         this.mockMvc.perform(get("/clients/1")).andExpect(status().isOk());
     }
 

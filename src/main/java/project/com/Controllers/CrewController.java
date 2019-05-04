@@ -14,7 +14,10 @@ import project.com.Service.TransportService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Єкіпаж контроллер
+ * Клас який містить методи для керуванням об'єктами "єкіпаж".
+ */
 @Controller
 public class CrewController {
 
@@ -30,12 +33,21 @@ public class CrewController {
     @Autowired
     private FlightService flightService;
 
+    /**
+     * Метод який дістає всі єкіпажі, які містяться в базі даних
+     * @return список всіх єкіпажів в форматі Json
+     */
     @RequestMapping(value = "/crews", method = RequestMethod.GET)
     public ResponseEntity<List<CrewDTO>> getAllCrew() {
         List<CrewDTO> crewDTOs = crewService.findAllCrew().stream().map(CrewDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(crewDTOs);
     }
 
+    /**
+     * @param id
+     * Метод для отримання єкіпажу по його параметру id
+     * @return Об'єкт "екіпаж" в форматі Json
+     */
     @RequestMapping(value = "/crews/{id}", method = RequestMethod.GET)
     public ResponseEntity<CrewDTO> getCrew(@PathVariable("id") Long id) {
         Crew crew = crewService.findCrewById(id);
@@ -44,6 +56,11 @@ public class CrewController {
         return ResponseEntity.ok(crewDTO);
     }
 
+    /**
+     * @param id
+     * Метод для видалення єкіпажу по id з бази даних
+     * @return статус
+     */
     @RequestMapping(value = "/crews/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<CrewDTO> deleteCrew(@PathVariable("id") Long id) {
         Crew crew = crewService.findCrewById(id);
@@ -53,6 +70,12 @@ public class CrewController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @param crew - оновлені дані про екіпаж в форматі Json
+     * @param id
+     * Метод для оновлення даних єкіпажу.
+     * @return оновлене значення екіпажу.
+     */
     @RequestMapping(value = "/crews/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> updateCrew(@RequestBody Crew crew, @PathVariable Long id) {
         Crew oldCrew = crewService.findCrewById(id);
@@ -65,6 +88,11 @@ public class CrewController {
         }
     }
 
+    /**
+     * @param crew - дані екіпажу в форматі Json
+     * Метод для додавання екіпажу в базу даних.
+     * @return створений екіпаж
+     */
     @RequestMapping(value = "/addCrew", method = RequestMethod.POST)
     public ResponseEntity<CrewDTO> addCrew(@RequestBody Crew crew) {
         if (crew == null) return ResponseEntity.noContent().build();
@@ -73,6 +101,12 @@ public class CrewController {
         return ResponseEntity.ok(crewDTO);
     }
 
+    /**
+     * @param personId - id існуючої персони
+     * @param id - id поточного екіпажу
+     * Метод для пов'язування існуючої персони з даним екіпажем.
+     * @return поточний екіпаж з позначеним зв'язком з персоною.
+     */
     @RequestMapping(value = "/crews/{id}/person/{personId}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addPersonToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("personId") Long personId) {
@@ -89,6 +123,12 @@ public class CrewController {
         }
     }
 
+    /**
+     * @param transportId - id існуючого транспорту
+     * @param id - id поточного клієнта
+     * Метод для пов'язування існуючого транспорту з даним клієнтом.
+     * @return поточний клієнт з позначеним зв'язком з транспортом.
+     */
     @RequestMapping(value = "/crews/{id}/transport/{transportId}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addTransportToCrew(@PathVariable("id") Long id,
                                                 @PathVariable("transportId") Long transportId) {
@@ -105,6 +145,12 @@ public class CrewController {
         }
     }
 
+    /**
+     * @param flightId - id існуючого маршруту
+     * @param id - id поточного екіпажу
+     * Метод для пов'язування існуючого маршруту з даним екіпажем.
+     * @return поточний екіпаж з позначеним зв'язком з маршрутом.
+     */
     @RequestMapping(value = "/crews/{id}/flight/{flightId}", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addFlightToCrew(@PathVariable("id") Long id,
                                                    @PathVariable("flightId") Long flightId) {

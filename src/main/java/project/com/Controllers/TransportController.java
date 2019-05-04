@@ -11,19 +11,31 @@ import project.com.Service.TransportService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Транспорт контроллер
+ * Клас який містить методи для керуванням об'єктами "Транспорт".
+ */
 @Controller
 public class TransportController {
 
     @Autowired
     private TransportService transportService;
 
+    /**
+     * Метод який дістає всі транспорти, які містяться в базі даних
+     * @return список всіх транспортів в форматі Json
+     */
     @RequestMapping(value = "/transports", method = RequestMethod.GET)
     public ResponseEntity<List<TransportDTO>> getAllTransport() {
         List<TransportDTO> transportsDTO = transportService.findAllTransport().stream().map(TransportDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(transportsDTO);
     }
 
+    /**
+     * @param id
+     * Метод для отримання транспорту по його параметру id
+     * @return Об'єкт "транспорт" в форматі Json
+     */
     @RequestMapping(value = "/transports/{id}", method = RequestMethod.GET)
     public ResponseEntity<TransportDTO> getTransport(@PathVariable("id") Long id) {
         Transport transport = transportService.findTransportById(id);
@@ -32,6 +44,11 @@ public class TransportController {
         return ResponseEntity.ok(transportDTO);
     }
 
+    /**
+     * @param id
+     * Метод для видалення транспорту по id з бази даних
+     * @return статус
+     */
     @RequestMapping(value = "/transports/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteTransports(@PathVariable("id") Long id) {
         Transport transport = transportService.findTransportById(id);
@@ -40,6 +57,12 @@ public class TransportController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * @param transport - оновлені дані про транспорт в форматі Json
+     * @param id
+     * Метод для оновлення даних транспорту.
+     * @return оновлене значення транспорту.
+     */
     @RequestMapping(value = "/transports/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<TransportDTO> updateTransports(@RequestBody Transport transport, @PathVariable Long id) {
         Transport oldTransport = transportService.findTransportById(id);
@@ -52,6 +75,11 @@ public class TransportController {
         }
     }
 
+    /**
+     * @param transport - дані транспорту в форматі Json
+     * Метод для додавання транспорту в базу даних.
+     * @return створений транспорт.
+     */
     @RequestMapping(value = "/addTransport", method = RequestMethod.POST)
     public ResponseEntity<TransportDTO> addPerson(@RequestBody Transport transport) {
         transportService.createTransport(transport);

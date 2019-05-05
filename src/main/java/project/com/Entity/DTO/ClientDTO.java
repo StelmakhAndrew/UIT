@@ -23,6 +23,11 @@ public class ClientDTO {
 
     private List<Long> transportsId;
 
+    public ClientDTO(Long id, String name) {
+        this.name = name;
+        this.id= id;
+    }
+
     /**
      * @param client
      * Конструктор для створення об'єкту ClientDTO з об'єкта Client

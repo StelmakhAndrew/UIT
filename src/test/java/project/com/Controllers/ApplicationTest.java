@@ -1,38 +1,74 @@
 package project.com.Controllers;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import project.com.Entity.Client;
+import project.com.Service.ClientService;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ApplicationTest {
 
+    private static String testerJsonObjectClient = "{\"id\":1,\"name\":\"for Testing\",\"crewsId\":[],\"transportsId\":[]}";
+
+    private static String jsonClient;
+
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private ClientService mockRepository;
+
+    @Before
+    public void init() {
+        Client book = new Client();
+        book.setName("for Testing");
+        book.setId(1L);
+        when(mockRepository.findClientById(1L)).thenReturn(book);
+    }
+
     @Test
-    public void shouldReturnDefaultMessage() throws Exception {
+    public void shouldReturnAllClients() throws Exception {
         this.mockMvc.perform(get("/clients")).andExpect(status().isOk());
     }
 
     @Test
-    public void shouldReturnDefaultMessages() throws Exception {
-        this.mockMvc.perform(get("/clients/1")).andExpect(status().isOk());
+    public void shouldReturnClient() throws Exception {
+        this.mockMvc.perform(get("/clients/1")).andExpect(status().isOk())
+                .andExpect(content().json(testerJsonObjectClient));
     }
 
+
+    @Test
+    public void shouldAddCrewToClient() throws Exception {
+        this.mockMvc.perform(put("/clients/1/crew/1")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldCreateAndRemoveClient() throws Exception {
+        this.mockMvc.perform(post("/addClient")
+                .content(testerJsonObjectClient)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(print()).andDo(mvcResult -> jsonClient = mvcResult.getResponse().getContentAsString());
+
+        long idTesterClient = Long.parseLong(jsonClient.substring(jsonClient.indexOf(":") + 1, jsonClient.indexOf(",")));
+        System.out.println();
+        this.mockMvc.perform(delete("/clients/delete/{id}", idTesterClient)).andExpect(status().isOk());
+    }
 }

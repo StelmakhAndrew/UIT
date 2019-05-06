@@ -41,10 +41,10 @@ public class ApplicationTest {
      */
     @Before
     public void init() {
-        Client book = new Client();
-        book.setName("for Testing");
-        book.setId(1L);
-        when(mockRepository.findClientById(1L)).thenReturn(book);
+        Client client = new Client();
+        client.setName("for Testing");
+        client.setId(1L);
+        when(mockRepository.findClientById(1L)).thenReturn(client);
     }
 
     /**

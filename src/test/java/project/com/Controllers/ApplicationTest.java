@@ -35,6 +35,10 @@ public class ApplicationTest {
     @MockBean
     private ClientService mockRepository;
 
+    /**
+     * Метод який запускається перед виконанням кожного тесту
+     * Який "мокає" метод findClientById() ClientService
+     */
     @Before
     public void init() {
         Client book = new Client();
@@ -43,23 +47,38 @@ public class ApplicationTest {
         when(mockRepository.findClientById(1L)).thenReturn(book);
     }
 
+    /**
+     * @throws Exception
+     * Тест для перевіпки роботи методу повернення всіх клієнтів
+     */
     @Test
     public void shouldReturnAllClients() throws Exception {
         this.mockMvc.perform(get("/clients")).andExpect(status().isOk());
     }
 
+    /**
+     * @throws Exception
+     * Тест для перевірки правильності повернення клієнту
+     */
     @Test
     public void shouldReturnClient() throws Exception {
         this.mockMvc.perform(get("/clients/1")).andExpect(status().isOk())
                 .andExpect(content().json(testerJsonObjectClient));
     }
 
-
+    /**
+     * @throws Exception
+     * Тест для перевірки роботи пов'язування об'єктів
+     */
     @Test
     public void shouldAddCrewToClient() throws Exception {
         this.mockMvc.perform(put("/clients/1/crew/1")).andExpect(status().isOk());
     }
 
+    /**
+     * @throws Exception
+     * Тест для перевірки виконання методів на створення та видалення об'єктів
+     */
     @Test
     public void shouldCreateAndRemoveClient() throws Exception {
         this.mockMvc.perform(post("/addClient")

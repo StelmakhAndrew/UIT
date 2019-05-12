@@ -16,7 +16,7 @@ public interface TransportService {
 
     Transport createTransport(TransportDTO transport);
 
-    void updateTransport(Transport transport);
+    Transport updateTransport(TransportDTO transport);
 
     Transport findTransportById(Long id);
 

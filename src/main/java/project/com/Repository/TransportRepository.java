@@ -15,8 +15,7 @@ import java.util.Optional;
 public interface TransportRepository extends JpaRepository<Transport, Long> {
 
     /**
-     * @param id
-     * Метод для отримання транспорту за його id
+     * @param id Метод для отримання транспорту за його id
      * @return
      */
     @Override
@@ -24,6 +23,7 @@ public interface TransportRepository extends JpaRepository<Transport, Long> {
 
     /**
      * метод для отримання всіх транспортів
+     *
      * @return
      */
     @Override
@@ -31,6 +31,7 @@ public interface TransportRepository extends JpaRepository<Transport, Long> {
 
     /**
      * метод для видалення транспорту по id
+     *
      * @param id
      */
     @Override

@@ -16,7 +16,7 @@ public interface FlightService {
 
     Flight createFlight(FlightDTO flight);
 
-    void updateFlight(Flight flight);
+    Flight updateFlight(FlightDTO flight);
 
     Flight findFlightById(Long id);
 

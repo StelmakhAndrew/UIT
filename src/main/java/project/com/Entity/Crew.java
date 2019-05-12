@@ -28,7 +28,7 @@ public class Crew {
      * Зв'язок один до багатьох.
      * Означає, що екіпаж може володіти багатьма транспортами.
      */
-    @OneToMany(mappedBy = "crew" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transport> transport = new ArrayList<>();
 
     /**

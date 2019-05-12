@@ -14,8 +14,7 @@ import java.util.Optional;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     /**
-     * @param id
-     * Метод для отримання персони за її id
+     * @param id Метод для отримання персони за її id
      * @return
      */
     @Override
@@ -23,14 +22,14 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     /**
      * метод для отримання всіх персон
+     *
      * @return
      */
     @Override
     List<Person> findAll();
 
     /**
-     * @param id
-     * метод для видалення персони за id
+     * @param id метод для видалення персони за id
      */
     @Override
     void deleteById(Long id);

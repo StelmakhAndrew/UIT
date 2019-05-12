@@ -24,6 +24,7 @@ public class TransportController {
 
     /**
      * Метод який дістає всі транспорти, які містяться в базі даних
+     *
      * @return список всіх транспортів в форматі Json
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -33,8 +34,7 @@ public class TransportController {
     }
 
     /**
-     * @param id
-     * Метод для отримання транспорту по його параметру id
+     * @param id Метод для отримання транспорту по його параметру id
      * @return Об'єкт "транспорт" в форматі Json
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -46,8 +46,7 @@ public class TransportController {
     }
 
     /**
-     * @param id
-     * Метод для видалення транспорту по id з бази даних
+     * @param id Метод для видалення транспорту по id з бази даних
      * @return статус
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -60,25 +59,28 @@ public class TransportController {
 
     /**
      * @param transport - оновлені дані про транспорт в форматі Json
-     * @param id
-     * Метод для оновлення даних транспорту.
+     * @param id        Метод для оновлення даних транспорту.
      * @return оновлене значення транспорту.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<TransportDTO> updateTransports(@RequestBody Transport transport, @PathVariable Long id) {
+    public ResponseEntity<TransportDTO> updateTransports(@RequestBody TransportDTO transport, @PathVariable Long id) {
         Transport oldTransport = transportService.findTransportById(id);
-        if (oldTransport == null) {
+
+        if (oldTransport == null)
             return ResponseEntity.notFound().build();
-        } else {
-            transportService.updateTransport(transport);
-            TransportDTO transportDTO = new TransportDTO(transport);
-            return ResponseEntity.ok(transportDTO);
-        }
+
+        transport.setId(id);
+        Transport updateTransport = transportService.updateTransport(transport);
+
+        if (updateTransport == null) return ResponseEntity.notFound().build();
+
+        transport = new TransportDTO(updateTransport);
+        return ResponseEntity.ok(transport);
     }
 
     /**
      * @param transport - дані транспорту в форматі Json
-     * Метод для додавання транспорту в базу даних.
+     *                  Метод для додавання транспорту в базу даних.
      * @return створений транспорт.
      */
     @RequestMapping(value = "/newtransport", method = RequestMethod.POST)

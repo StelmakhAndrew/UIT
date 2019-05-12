@@ -37,7 +37,7 @@ public class FlightServiceImpl implements FlightService {
         Flight newFlight = new Flight();
         newFlight.setName(flight.getName());
 
-        if (flight.getCrewId()!=null){
+        if (flight.getCrewId() != null) {
             Crew currentCrew = crewService.findCrewById(flight.getCrewId());
 
             if (currentCrew == null) return null;
@@ -50,8 +50,8 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void updateFlight(Flight flight) {
-        flightRepository.save(flight);
+    public Flight updateFlight(FlightDTO flight) {
+        return createFlight(flight);
     }
 
     @Override

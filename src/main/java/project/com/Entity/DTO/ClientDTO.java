@@ -28,13 +28,12 @@ public class ClientDTO {
 
     public ClientDTO(Long id, String name) {
         this.name = name;
-        this.id= id;
+        this.id = id;
     }
 
     /**
-     * @param client
-     * Конструктор для створення об'єкту ClientDTO з об'єкта Client
-     * з отриманням необхідних полів.
+     * @param client Конструктор для створення об'єкту ClientDTO з об'єкта Client
+     *               з отриманням необхідних полів.
      */
     public ClientDTO(Client client) {
         this.id = client.getId();

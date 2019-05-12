@@ -15,8 +15,7 @@ import java.util.Optional;
 public interface CrewRepository extends JpaRepository<Crew, Long> {
 
     /**
-     * @param id
-     * Метод для отримання екіпажу за його id
+     * @param id Метод для отримання екіпажу за його id
      * @return
      */
     @Override
@@ -24,6 +23,7 @@ public interface CrewRepository extends JpaRepository<Crew, Long> {
 
     /**
      * метод для отримання всіх екіпажів
+     *
      * @return
      */
     @Override
@@ -31,6 +31,7 @@ public interface CrewRepository extends JpaRepository<Crew, Long> {
 
     /**
      * для видалення екіпажу
+     *
      * @param id
      */
     @Override

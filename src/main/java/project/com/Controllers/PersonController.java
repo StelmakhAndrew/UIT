@@ -25,6 +25,7 @@ public class PersonController {
 
     /**
      * Метод який дістає всі персони, які містяться в базі даних
+     *
      * @return список всіх персон в форматі Json
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -34,8 +35,7 @@ public class PersonController {
     }
 
     /**
-     * @param id
-     * Метод для отримання персони по її параметру id
+     * @param id Метод для отримання персони по її параметру id
      * @return Об'єкт "персона" в форматі Json
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -48,8 +48,7 @@ public class PersonController {
     }
 
     /**
-     * @param id
-     * Метод для видалення персони по id з бази даних
+     * @param id Метод для видалення персони по id з бази даних
      * @return статус
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -62,26 +61,29 @@ public class PersonController {
 
     /**
      * @param person - оновлені дані про персону в форматі Json
-     * @param id
-     * Метод для оновлення даних персони.
+     * @param id     Метод для оновлення даних персони.
      * @return оновлене значення персони.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<PersonDTO> update(@RequestBody Person person, @PathVariable Long id) {
+    public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO person, @PathVariable Long id) {
+        person.setId(id);
         Person oldPerson = personService.findPersonById(id);
-        if (oldPerson == null) {
+
+        if (oldPerson == null)
             return ResponseEntity.notFound().build();
-        } else {
-            person.setId(id);
-            personService.updatePerson(person);
-            PersonDTO personDTO = new PersonDTO(person);
-            return ResponseEntity.ok(personDTO);
-        }
+
+        Person updatePerson = personService.updatePerson(person);
+
+        if (updatePerson == null) return ResponseEntity.notFound().build();
+
+        person = new PersonDTO(updatePerson);
+
+        return ResponseEntity.ok(person);
     }
 
     /**
      * @param person - дані персони в форматі Json
-     * Метод для додавання персони в базу даних.
+     *               Метод для додавання персони в базу даних.
      * @return створена персона.
      */
     @RequestMapping(value = "/newperson", method = RequestMethod.POST)
@@ -89,7 +91,7 @@ public class PersonController {
 
         if (person == null) return ResponseEntity.notFound().build();
 
-        Person newPerson =  personService.createPerson(person);
+        Person newPerson = personService.createPerson(person);
 
         if (newPerson == null) return ResponseEntity.notFound().build();
 

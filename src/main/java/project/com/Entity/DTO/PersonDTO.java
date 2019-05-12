@@ -18,18 +18,18 @@ public class PersonDTO {
 
     private Long crewId;
 
-    public PersonDTO(){}
+    public PersonDTO() {
+    }
 
     /**
-     * @param person
-     * Конструктор для створення об'єкту PersonDTO з об'єкта Person
-     * з отриманням необхідних полів.
+     * @param person Конструктор для створення об'єкту PersonDTO з об'єкта Person
+     *               з отриманням необхідних полів.
      */
     public PersonDTO(Person person) {
         this.id = person.getId();
         this.firstName = person.getFirstName();
         this.secondName = person.getSecondName();
-        this.crewId = person.getCrew()!=null? person.getCrew().getId():null;
+        this.crewId = person.getCrew() != null ? person.getCrew().getId() : null;
     }
 
 

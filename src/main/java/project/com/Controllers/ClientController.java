@@ -36,6 +36,7 @@ public class ClientController {
 
     /**
      * Метод який дістає всіх клієнтів, які містяться в базі даних
+     *
      * @return список всіх клієнтів в форматі Json
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -45,8 +46,7 @@ public class ClientController {
     }
 
     /**
-     * @param id
-     * Метод для отримання клієнта по його параметру id
+     * @param id Метод для отримання клієнта по його параметру id
      * @return Об'єкт "клієнт" в форматі Json
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -59,8 +59,7 @@ public class ClientController {
     }
 
     /**
-     * @param id
-     * Метод для видалення клієнта по id з бази даних
+     * @param id Метод для видалення клієнта по id з бази даних
      * @return статус
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -74,25 +73,29 @@ public class ClientController {
 
     /**
      * @param client - оновлені дані про клієнта в форматі Json
-     * @param id
-     * Метод для оновлення клієнта
+     * @param id     Метод для оновлення клієнта
      * @return оновлене значення клієнта.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ClientDTO> updateClient(@RequestBody Client client, @PathVariable Long id) {
+    public ResponseEntity<ClientDTO> updateClient(@RequestBody ClientDTO client, @PathVariable Long id) {
         Client oldClient = clientService.findClientById(id);
-        if (oldClient == null) {
+        client.setId(id);
+
+        if (oldClient == null)
             return ResponseEntity.notFound().build();
-        } else {
-            clientService.updateClient(client);
-            ClientDTO clientDTO = new ClientDTO(client);
-            return ResponseEntity.ok(clientDTO);
-        }
+
+        Client updateClient = clientService.updateClient(client);
+
+        if (updateClient == null) return ResponseEntity.notFound().build();
+
+        client = new ClientDTO(updateClient);
+
+        return ResponseEntity.ok(client);
     }
 
     /**
      * @param client - дані клієнта в форматі Json
-     * Метод для додавання клієнта в базу даних.
+     *               Метод для додавання клієнта в базу даних.
      * @return створений клієнт
      */
     @RequestMapping(value = "/newclient", method = RequestMethod.POST)
@@ -112,9 +115,9 @@ public class ClientController {
     }
 
     /**
-     * @param crewId - id існуючого екіпажу
+     * @param crewId   - id існуючого екіпажу
      * @param clientId - id поточного клієнта
-     * Метод для пов'язування існуючого екіпажу з даним клієнтом.
+     *                 Метод для пов'язування існуючого екіпажу з даним клієнтом.
      * @return поточний клієнт з позначеним зв'язком з екіпажем.
      */
     @RequestMapping(value = "/connectcrew", method = RequestMethod.PUT)
@@ -134,8 +137,8 @@ public class ClientController {
 
     /**
      * @param transportId - id існуючого транспорту
-     * @param clientId - id поточного клієнта
-     * Метод для пов'язування існуючого транспорту з даним клієнтом.
+     * @param clientId    - id поточного клієнта
+     *                    Метод для пов'язування існуючого транспорту з даним клієнтом.
      * @return поточний клієнт з позначеним зв'язком з транспортом.
      */
     @RequestMapping(value = "/connecttransport", method = RequestMethod.PUT)

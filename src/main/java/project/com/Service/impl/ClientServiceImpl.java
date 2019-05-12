@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
         newClient.setName(client.getName());
         List<Long> crews = client.getCrewsId();
         List<Long> transports = client.getTransportsId();
-        if (crews!=null){
+        if (crews != null) {
             for (Long crew : crews) {
                 Crew currentCrew = crewService.findCrewById(crew);
                 if (currentCrew == null)
@@ -47,8 +47,8 @@ public class ClientServiceImpl implements ClientService {
                 currentCrew.setClient(newClient);
             }
         }
-        if (transports!=null){
-            for (Long transport: transports) {
+        if (transports != null) {
+            for (Long transport : transports) {
                 Transport currentTransport = transportService.findTransportById(transport);
                 if (currentTransport == null)
                     return null;
@@ -61,10 +61,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    @Override
+    public Client updateClient(ClientDTO client) {
+        return createClient(client);
+    }
 
     @Override
-    public void updateClient(Client client) {
-        clientRepository.save(client);
+    public Client updateClient(Client client) {
+        return clientRepository.save(client);
     }
 
     @Override

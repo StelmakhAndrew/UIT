@@ -14,10 +14,8 @@ import java.util.Optional;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
-
     /**
-     * @param id
-     * Метод для отримання Client за його id
+     * @param id Метод для отримання Client за його id
      * @return
      */
     @Override
@@ -25,6 +23,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     /**
      * метод для отримання всіх клієнтів
+     *
      * @return
      */
     @Override
@@ -32,6 +31,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     /**
      * метод для видалення клієнта по id
+     *
      * @param id
      */
     @Override

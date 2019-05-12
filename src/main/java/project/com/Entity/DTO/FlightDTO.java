@@ -21,14 +21,13 @@ public class FlightDTO {
     }
 
     /**
-     * @param flight
-     * Конструктор для створення об'єкту FlightDTO з об'єкта Flight
-     * з отриманням необхідних полів.
+     * @param flight Конструктор для створення об'єкту FlightDTO з об'єкта Flight
+     *               з отриманням необхідних полів.
      */
     public FlightDTO(Flight flight) {
         this.id = flight.getId();
         this.name = flight.getName();
-        this.crewId = flight.getCrew()!=null?flight.getCrew().getId():null;
+        this.crewId = flight.getCrew() != null ? flight.getCrew().getId() : null;
     }
 
     public Long getId() {

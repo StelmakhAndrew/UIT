@@ -16,7 +16,9 @@ public interface ClientService {
 
     Client createClient(ClientDTO client);
 
-    void updateClient(Client client);
+    Client updateClient(ClientDTO client);
+
+    Client updateClient(Client client);
 
     Client findClientById(Long id);
 

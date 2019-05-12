@@ -15,8 +15,7 @@ import java.util.Optional;
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     /**
-     * @param id
-     * Метод для отримання маршруту за його id
+     * @param id Метод для отримання маршруту за його id
      * @return
      */
     @Override
@@ -24,14 +23,14 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     /**
      * метод для отримання всіх маршрутів
+     *
      * @return
      */
     @Override
     List<Flight> findAll();
 
     /**
-     * @param id
-     * метод для видалення маршруту за його id
+     * @param id метод для видалення маршруту за його id
      */
     @Override
     void deleteById(Long id);

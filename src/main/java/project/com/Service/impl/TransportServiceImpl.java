@@ -58,8 +58,8 @@ public class TransportServiceImpl implements TransportService {
     }
 
     @Override
-    public void updateTransport(Transport transport) {
-        transportRepository.save(transport);
+    public Transport updateTransport(TransportDTO transport) {
+        return createTransport(transport);
     }
 
     @Override

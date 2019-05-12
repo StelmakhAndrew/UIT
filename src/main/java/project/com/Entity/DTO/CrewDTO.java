@@ -28,16 +28,15 @@ public class CrewDTO {
     }
 
     /**
-     * @param crew
-     * Конструктор для створення об'єкту CrewDTO з об'єкта Crew
-     * з отриманням необхідних полів.
+     * @param crew Конструктор для створення об'єкту CrewDTO з об'єкта Crew
+     *             з отриманням необхідних полів.
      */
     public CrewDTO(Crew crew) {
         this.id = crew.getId();
         this.personsId = crew.getPersons().stream().map(Person::getId).collect(Collectors.toList());
         this.transportId = crew.getTransport().stream().map(Transport::getId).collect(Collectors.toList());
-        this.flightId = crew.getFlight()!=null?crew.getFlight().getId():null;
-        this.clientId = crew.getClient()!=null?crew.getClient().getId():null;
+        this.flightId = crew.getFlight() != null ? crew.getFlight().getId() : null;
+        this.clientId = crew.getClient() != null ? crew.getClient().getId() : null;
     }
 
     public Long getId() {

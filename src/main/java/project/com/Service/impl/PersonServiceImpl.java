@@ -31,10 +31,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person createPerson(PersonDTO person) {
         Person newPerson = new Person();
+        newPerson.setId(person.getId());
         newPerson.setSecondName(person.getSecondName());
         newPerson.setFirstName(person.getFirstName());
 
-        if (person.getCrewId() != null){
+        if (person.getCrewId() != null) {
             Crew currentCrew = crewService.findCrewById(person.getCrewId());
             if (currentCrew == null) return null;
             newPerson.setCrew(currentCrew);
@@ -46,8 +47,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void updatePerson(Person person) {
-        personRepository.save(person);
+    public Person updatePerson(PersonDTO person) {
+        return createPerson(person);
     }
 
 

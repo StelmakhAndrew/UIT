@@ -24,16 +24,17 @@ public class TransportDTO {
 
     private String photoUrl;
 
-    public TransportDTO(){}
+    public TransportDTO() {
+    }
+
     /**
-     * @param transport
-     * Конструктор для створення об'єкту TransportDTO з об'єкта Transport
-     * з отриманням необхідних полів.
+     * @param transport Конструктор для створення об'єкту TransportDTO з об'єкта Transport
+     *                  з отриманням необхідних полів.
      */
     public TransportDTO(Transport transport) {
         this.id = transport.getId();
-        this.crewId = transport.getCrew()!=null?transport.getCrew().getId():null;
-        this.clientId = transport.getClient()!=null?transport.getClient().getId():null;
+        this.crewId = transport.getCrew() != null ? transport.getCrew().getId() : null;
+        this.clientId = transport.getClient() != null ? transport.getClient().getId() : null;
         this.model = transport.getModel();
         this.productionYear = transport.getProductionYear();
         this.mileage = transport.getMileage();

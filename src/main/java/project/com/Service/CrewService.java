@@ -16,8 +16,9 @@ public interface CrewService {
 
     Crew createCrew(CrewDTO crew);
 
+    Crew updateCrew(CrewDTO crew);
 
-    void updateCrew(Crew crew);
+    Crew updateCrew(Crew crew);
 
     Crew findCrewById(Long id);
 

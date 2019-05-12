@@ -33,6 +33,7 @@ public class CrewController {
 
     /**
      * Метод який дістає всі єкіпажі, які містяться в базі даних
+     *
      * @return список всіх єкіпажів в форматі Json
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -42,8 +43,7 @@ public class CrewController {
     }
 
     /**
-     * @param id
-     * Метод для отримання єкіпажу по його параметру id
+     * @param id Метод для отримання єкіпажу по його параметру id
      * @return Об'єкт "екіпаж" в форматі Json
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -55,8 +55,7 @@ public class CrewController {
     }
 
     /**
-     * @param id
-     * Метод для видалення єкіпажу по id з бази даних
+     * @param id Метод для видалення єкіпажу по id з бази даних
      * @return статус
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -70,25 +69,28 @@ public class CrewController {
 
     /**
      * @param crew - оновлені дані про екіпаж в форматі Json
-     * @param id
-     * Метод для оновлення даних єкіпажу.
+     * @param id   Метод для оновлення даних єкіпажу.
      * @return оновлене значення екіпажу.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<CrewDTO> updateCrew(@RequestBody Crew crew, @PathVariable Long id) {
+    public ResponseEntity<CrewDTO> updateCrew(@RequestBody CrewDTO crew, @PathVariable Long id) {
         Crew oldCrew = crewService.findCrewById(id);
-        if (oldCrew == null) {
+        crew.setId(id);
+
+        if (oldCrew == null)
             return ResponseEntity.notFound().build();
-        } else {
-            crewService.updateCrew(crew);
-            CrewDTO crewDTO = new CrewDTO(crew);
-            return ResponseEntity.ok(crewDTO);
-        }
+        Crew updateCrew = crewService.updateCrew(crew);
+
+        if (updateCrew == null) return ResponseEntity.notFound().build();
+
+        crew = new CrewDTO(updateCrew);
+
+        return ResponseEntity.ok(crew);
     }
 
     /**
      * @param crew - дані екіпажу в форматі Json
-     * Метод для додавання екіпажу в базу даних.
+     *             Метод для додавання екіпажу в базу даних.
      * @return створений екіпаж
      */
     @RequestMapping(value = "/newcrew", method = RequestMethod.POST)
@@ -98,7 +100,7 @@ public class CrewController {
 
         Crew newCrew = crewService.createCrew(crew);
 
-        if (newCrew==null) return ResponseEntity.badRequest().build();
+        if (newCrew == null) return ResponseEntity.badRequest().build();
 
         crew = new CrewDTO(newCrew);
 
@@ -107,13 +109,13 @@ public class CrewController {
 
     /**
      * @param personId - id існуючої персони
-     * @param crewId - id поточного екіпажу
-     * Метод для пов'язування існуючої персони з даним екіпажем.
+     * @param crewId   - id поточного екіпажу
+     *                 Метод для пов'язування існуючої персони з даним екіпажем.
      * @return поточний екіпаж з позначеним зв'язком з персоною.
      */
     @RequestMapping(value = "/connectperson", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addPersonToCrew(@RequestParam("crewId") Long crewId,
-                                                @RequestParam("personId") Long personId) {
+                                                   @RequestParam("personId") Long personId) {
         Crew crew = crewService.findCrewById(crewId);
         Person person = personService.findPersonById(personId);
         if (crew == null || person == null) {
@@ -129,13 +131,13 @@ public class CrewController {
 
     /**
      * @param transportId - id існуючого транспорту
-     * @param crewId - id поточного клієнта
-     * Метод для пов'язування існуючого транспорту з даним клієнтом.
+     * @param crewId      - id поточного клієнта
+     *                    Метод для пов'язування існуючого транспорту з даним клієнтом.
      * @return поточний клієнт з позначеним зв'язком з транспортом.
      */
     @RequestMapping(value = "/connecttransport", method = RequestMethod.PUT)
     public ResponseEntity<CrewDTO> addTransportToCrew(@RequestParam("crewId") Long crewId,
-                                                @RequestParam("transportId") Long transportId) {
+                                                      @RequestParam("transportId") Long transportId) {
         Crew crew = crewService.findCrewById(crewId);
         Transport transport = transportService.findTransportById(transportId);
         if (crew == null || transport == null) {
@@ -151,8 +153,8 @@ public class CrewController {
 
     /**
      * @param flightId - id існуючого маршруту
-     * @param crewId - id поточного екіпажу
-     * Метод для пов'язування існуючого маршруту з даним екіпажем.
+     * @param crewId   - id поточного екіпажу
+     *                 Метод для пов'язування існуючого маршруту з даним екіпажем.
      * @return поточний екіпаж з позначеним зв'язком з маршрутом.
      */
     @RequestMapping(value = "/connectflight", method = RequestMethod.PUT)

@@ -38,14 +38,14 @@ public class CrewServiceImpl implements CrewService {
     public Crew createCrew(CrewDTO crew) {
         Crew newCrew = new Crew();
 
-        if (crew.getClientId()!=null){
+        if (crew.getClientId() != null) {
             Client currentClient = clientService.findClientById(crew.getClientId());
-            if (currentClient ==null) return null;
+            if (currentClient == null) return null;
             newCrew.setClient(currentClient);
             currentClient.addCrews(newCrew);
         }
 
-        if (crew.getFlightId()!=null){
+        if (crew.getFlightId() != null) {
             Flight currentFlight = flightService.findFlightById(crew.getFlightId());
             if (currentFlight == null) return null;
             newCrew.setFlight(currentFlight);
@@ -54,8 +54,8 @@ public class CrewServiceImpl implements CrewService {
 
         List<Long> transports = crew.getTransportId();
 
-        if (transports!=null){
-            for (Long transportId: transports) {
+        if (transports != null) {
+            for (Long transportId : transports) {
                 Transport currentTransport = transportService.findTransportById(transportId);
                 if (currentTransport == null)
                     return null;
@@ -66,8 +66,8 @@ public class CrewServiceImpl implements CrewService {
 
         List<Long> persons = crew.getPersonsId();
 
-        if (persons!=null){
-            for (Long personId: persons) {
+        if (persons != null) {
+            for (Long personId : persons) {
                 Person currentPerson = personService.findPersonById(personId);
                 if (currentPerson == null)
                     return null;
@@ -80,8 +80,14 @@ public class CrewServiceImpl implements CrewService {
     }
 
     @Override
-    public void updateCrew(Crew crew) {
-        crewRepository.save(crew);
+    public Crew updateCrew(CrewDTO crew) {
+        return createCrew(crew);
+    }
+
+    @Override
+    public Crew updateCrew(Crew crew) {
+
+        return crewRepository.save(crew);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class FlightController {
 
     /**
      * Метод який дістає всі маршрути, які містяться в базі даних
+     *
      * @return список всіх маршрутів в форматі Json
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -34,52 +35,53 @@ public class FlightController {
     }
 
     /**
-     * @param id
-     * Метод для отримання маршруту по його параметру id
+     * @param id Метод для отримання маршруту по його параметру id
      * @return Об'єкт "маршрут" в форматі Json
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<FlightDTO> getFlight(@PathVariable("id") Long id) {
         Flight flight = flightService.findFlightById(id);
-        if (flight ==null) return ResponseEntity.notFound().build();
+        if (flight == null) return ResponseEntity.notFound().build();
         FlightDTO flightDTO = new FlightDTO(flight);
         return ResponseEntity.ok(flightDTO);
     }
 
     /**
-     * @param id
-     * Метод для видалення маршруту по id з бази даних
+     * @param id Метод для видалення маршруту по id з бази даних
      * @return статус
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<FlightDTO> deleteFlight(@PathVariable("id") Long id) {
         Flight flight = flightService.findFlightById(id);
-        if (flight ==null) return ResponseEntity.notFound().build();
+        if (flight == null) return ResponseEntity.notFound().build();
         flightService.deleteFlight(id);
         return ResponseEntity.noContent().build();
     }
 
     /**
      * @param flight - оновлені дані про маршрут в форматі Json
-     * @param id
-     * Метод для оновлення даних маршруту.
+     * @param id     Метод для оновлення даних маршруту.
      * @return оновлене значення маршруту.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<FlightDTO> updateFlight(@RequestBody Flight flight, @PathVariable Long id) {
+    public ResponseEntity<FlightDTO> updateFlight(@RequestBody FlightDTO flight, @PathVariable Long id) {
         Flight oldFlight = flightService.findFlightById(id);
-        if (oldFlight == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            flightService.updateFlight(flight);
-            FlightDTO flightDTO = new FlightDTO(flight);
-            return ResponseEntity.ok(flightDTO);
-        }
+        flight.setId(id);
+
+        if (oldFlight == null) return ResponseEntity.notFound().build();
+
+        Flight updateFlight = flightService.updateFlight(flight);
+
+        if (updateFlight == null) return ResponseEntity.notFound().build();
+
+        flight = new FlightDTO(updateFlight);
+
+        return ResponseEntity.ok(flight);
     }
 
     /**
      * @param flight - дані маршруту в форматі Json
-     * Метод для додавання маршруту в базу даних.
+     *               Метод для додавання маршруту в базу даних.
      * @return створений маршрут
      */
     @RequestMapping(value = "/newflight", method = RequestMethod.POST)

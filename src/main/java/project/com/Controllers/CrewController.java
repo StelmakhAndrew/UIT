@@ -174,27 +174,4 @@ public class CrewController {
             return ResponseEntity.ok(crewDTO);
         }
     }
-
-    /**
-     * @param clientId - id існуючого маршруту
-     * @param crewId - id поточного екіпажу
-     * Метод для пов'язування існуючого маршруту з даним екіпажем.
-     * @return поточний екіпаж з позначеним зв'язком з маршрутом.
-     */
-
-    @RequestMapping(value = "/connectclient", method = RequestMethod.PUT)
-    public ResponseEntity<CrewDTO> addClientToCrew(@RequestParam("crewId") Long crewId,
-                                                   @RequestParam("clientId") Long clientId) {
-        Crew crew = crewService.findCrewById(crewId);
-        Client client = clientService.findClientById(clientId);
-        if (crew == null || client == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            crew.setClient(client);
-            client.addCrews(crew);
-            crewService.updateCrew(crew);
-            CrewDTO crewDTO = new CrewDTO(crew);
-            return ResponseEntity.ok(crewDTO);
-        }
-    }
 }

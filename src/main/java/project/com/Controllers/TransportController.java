@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  * Клас який містить методи для керуванням об'єктами "Транспорт".
  */
 @Controller
+@RequestMapping("/transports")
 public class TransportController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class TransportController {
      * Метод який дістає всі транспорти, які містяться в базі даних
      * @return список всіх транспортів в форматі Json
      */
-    @RequestMapping(value = "/transports", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<TransportDTO>> getAllTransport() {
         List<TransportDTO> transportsDTO = transportService.findAllTransport().stream().map(TransportDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(transportsDTO);
@@ -36,7 +37,7 @@ public class TransportController {
      * Метод для отримання транспорту по його параметру id
      * @return Об'єкт "транспорт" в форматі Json
      */
-    @RequestMapping(value = "/transports/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<TransportDTO> getTransport(@PathVariable("id") Long id) {
         Transport transport = transportService.findTransportById(id);
         if (transport == null) return ResponseEntity.notFound().build();
@@ -49,7 +50,7 @@ public class TransportController {
      * Метод для видалення транспорту по id з бази даних
      * @return статус
      */
-    @RequestMapping(value = "/transports/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteTransports(@PathVariable("id") Long id) {
         Transport transport = transportService.findTransportById(id);
         if (transport == null) return ResponseEntity.notFound().build();
@@ -63,7 +64,7 @@ public class TransportController {
      * Метод для оновлення даних транспорту.
      * @return оновлене значення транспорту.
      */
-    @RequestMapping(value = "/transports/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<TransportDTO> updateTransports(@RequestBody Transport transport, @PathVariable Long id) {
         Transport oldTransport = transportService.findTransportById(id);
         if (oldTransport == null) {
@@ -80,7 +81,7 @@ public class TransportController {
      * Метод для додавання транспорту в базу даних.
      * @return створений транспорт.
      */
-    @RequestMapping(value = "/addTransport", method = RequestMethod.POST)
+    @RequestMapping(value = "/newtransport", method = RequestMethod.POST)
     public ResponseEntity<TransportDTO> addPerson(@RequestBody Transport transport) {
         transportService.createTransport(transport);
         TransportDTO transportDTO = new TransportDTO(transport);

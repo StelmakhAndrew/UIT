@@ -17,6 +17,9 @@ public class FlightDTO {
 
     private Long crewId;
 
+    public FlightDTO() {
+    }
+
     /**
      * @param flight
      * Конструктор для створення об'єкту FlightDTO з об'єкта Flight

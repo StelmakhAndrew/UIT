@@ -31,10 +31,6 @@ public class CrewController {
     @Autowired
     private FlightService flightService;
 
-
-    @Autowired
-    private ClientService clientService;
-
     /**
      * Метод який дістає всі єкіпажі, які містяться в базі даних
      * @return список всіх єкіпажів в форматі Json

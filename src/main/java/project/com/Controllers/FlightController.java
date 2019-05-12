@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  * Клас який містить методи для керуванням об'єктами "маршрут".
  */
 @Controller
+@RequestMapping("/flights")
 public class FlightController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class FlightController {
      * Метод який дістає всі маршрути, які містяться в базі даних
      * @return список всіх маршрутів в форматі Json
      */
-    @RequestMapping(value = "/flights", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<FlightDTO>> getAllFlight() {
         List<FlightDTO> flightsDTO = flightService.findAllFlight().stream().map(FlightDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(flightsDTO);
@@ -37,7 +38,7 @@ public class FlightController {
      * Метод для отримання маршруту по його параметру id
      * @return Об'єкт "маршрут" в форматі Json
      */
-    @RequestMapping(value = "/flights/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<FlightDTO> getFlight(@PathVariable("id") Long id) {
         Flight flight = flightService.findFlightById(id);
         if (flight ==null) return ResponseEntity.notFound().build();
@@ -50,7 +51,7 @@ public class FlightController {
      * Метод для видалення маршруту по id з бази даних
      * @return статус
      */
-    @RequestMapping(value = "/flights/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<FlightDTO> deleteFlight(@PathVariable("id") Long id) {
         Flight flight = flightService.findFlightById(id);
         if (flight ==null) return ResponseEntity.notFound().build();
@@ -64,7 +65,7 @@ public class FlightController {
      * Метод для оновлення даних маршруту.
      * @return оновлене значення маршруту.
      */
-    @RequestMapping(value = "/flights/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody Flight flight, @PathVariable Long id) {
         Flight oldFlight = flightService.findFlightById(id);
         if (oldFlight == null) {
@@ -81,10 +82,17 @@ public class FlightController {
      * Метод для додавання маршруту в базу даних.
      * @return створений маршрут
      */
-    @RequestMapping(value = "/addFlight", method = RequestMethod.POST)
-    public ResponseEntity<FlightDTO> addClient(@RequestBody Flight flight) {
-        flightService.createFlight(flight);
-        FlightDTO flightDTO = new FlightDTO(flight);
-        return ResponseEntity.ok(flightDTO);
+    @RequestMapping(value = "/newflight", method = RequestMethod.POST)
+    public ResponseEntity<FlightDTO> addClient(@RequestBody FlightDTO flight) {
+
+        if (flight == null) return ResponseEntity.noContent().build();
+
+        Flight newFlight = flightService.createFlight(flight);
+
+        if (newFlight == null) return ResponseEntity.badRequest().build();
+
+        flight = new FlightDTO(newFlight);
+
+        return ResponseEntity.ok(flight);
     }
 }

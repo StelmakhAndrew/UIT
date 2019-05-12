@@ -4,6 +4,7 @@ package project.com.Service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.com.Entity.Crew;
+import project.com.Entity.DTO.FlightDTO;
 import project.com.Entity.Flight;
 import project.com.Repository.CrewRepository;
 import project.com.Repository.FlightRepository;
@@ -19,12 +20,33 @@ import java.util.Optional;
 @Service
 public class FlightServiceImpl implements FlightService {
 
+    private final FlightRepository flightRepository;
+
+
+    private final CrewService crewService;
+
     @Autowired
-    private FlightRepository flightRepository;
+    public FlightServiceImpl(FlightRepository flightRepository, CrewService crewService) {
+        this.flightRepository = flightRepository;
+        this.crewService = crewService;
+    }
+
 
     @Override
-    public void createFlight(Flight flight) {
-        flightRepository.save(flight);
+    public Flight createFlight(FlightDTO flight) {
+        Flight newFlight = new Flight();
+        newFlight.setName(flight.getName());
+
+        if (flight.getCrewId()!=null){
+            Crew currentCrew = crewService.findCrewById(flight.getCrewId());
+
+            if (currentCrew == null) return null;
+            newFlight.setCrew(currentCrew);
+            currentCrew.setFlight(newFlight);
+        }
+
+        flightRepository.save(newFlight);
+        return newFlight;
     }
 
     @Override

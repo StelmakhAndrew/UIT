@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  * Клас який містить методи для керуванням об'єктами "Персона".
  */
 @Controller
+@RequestMapping("/persons")
 public class PersonController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class PersonController {
      * Метод який дістає всі персони, які містяться в базі даних
      * @return список всіх персон в форматі Json
      */
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<PersonDTO>> getAllPerson() {
         List<PersonDTO> personDTOS = personService.findAllPerson().stream().map(PersonDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(personDTOS);
@@ -36,7 +37,7 @@ public class PersonController {
      * Метод для отримання персони по її параметру id
      * @return Об'єкт "персона" в форматі Json
      */
-    @RequestMapping(value = "/persons/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<PersonDTO> getPerson(@PathVariable("id") Long id) {
 
         Person person = personService.findPersonById(id);
@@ -50,7 +51,7 @@ public class PersonController {
      * Метод для видалення персони по id з бази даних
      * @return статус
      */
-    @RequestMapping(value = "/persons/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<PersonDTO> deletePerson(@PathVariable("id") Long id) {
         Person person = personService.findPersonById(id);
         if (person == null) return ResponseEntity.notFound().build();
@@ -64,7 +65,7 @@ public class PersonController {
      * Метод для оновлення даних персони.
      * @return оновлене значення персони.
      */
-    @RequestMapping(value = "/persons/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<PersonDTO> update(@RequestBody Person person, @PathVariable Long id) {
         Person oldPerson = personService.findPersonById(id);
         if (oldPerson == null) {
@@ -82,7 +83,7 @@ public class PersonController {
      * Метод для додавання персони в базу даних.
      * @return створена персона.
      */
-    @RequestMapping(value = "/addPerson", method = RequestMethod.POST)
+    @RequestMapping(value = "/newperson", method = RequestMethod.POST)
     public ResponseEntity<PersonDTO> addPerson(@RequestBody Person person) {
         personService.createPerson(person);
         PersonDTO personDTO = new PersonDTO(person);

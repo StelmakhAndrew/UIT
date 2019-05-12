@@ -83,7 +83,7 @@ public class TransportController {
      *                  Метод для додавання транспорту в базу даних.
      * @return створений транспорт.
      */
-    @RequestMapping(value = "/newtransport", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<TransportDTO> addPerson(@RequestBody TransportDTO transport) {
 
         if (transport == null) return ResponseEntity.notFound().build();

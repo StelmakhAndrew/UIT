@@ -93,7 +93,7 @@ public class CrewController {
      *             Метод для додавання екіпажу в базу даних.
      * @return створений екіпаж
      */
-    @RequestMapping(value = "/newcrew", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<CrewDTO> addCrew(@RequestBody CrewDTO crew) {
 
         if (crew == null) return ResponseEntity.noContent().build();

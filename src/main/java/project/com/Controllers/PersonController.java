@@ -86,7 +86,7 @@ public class PersonController {
      *               Метод для додавання персони в базу даних.
      * @return створена персона.
      */
-    @RequestMapping(value = "/newperson", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<PersonDTO> addPerson(@RequestBody PersonDTO person) {
 
         if (person == null) return ResponseEntity.notFound().build();

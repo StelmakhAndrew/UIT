@@ -84,7 +84,7 @@ public class FlightController {
      *               Метод для додавання маршруту в базу даних.
      * @return створений маршрут
      */
-    @RequestMapping(value = "/newflight", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<FlightDTO> addClient(@RequestBody FlightDTO flight) {
 
         if (flight == null) return ResponseEntity.noContent().build();

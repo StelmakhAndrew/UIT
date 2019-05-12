@@ -1,6 +1,7 @@
 package project.com.Service;
 
 import org.springframework.stereotype.Service;
+import project.com.Entity.DTO.TransportDTO;
 import project.com.Entity.Person;
 import project.com.Entity.Transport;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 public interface TransportService {
 
-    void createTransport(Transport transport);
+    Transport createTransport(TransportDTO transport);
 
     void updateTransport(Transport transport);
 

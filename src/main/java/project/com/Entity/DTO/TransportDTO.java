@@ -24,6 +24,7 @@ public class TransportDTO {
 
     private String photoUrl;
 
+    public TransportDTO(){}
     /**
      * @param transport
      * Конструктор для створення об'єкту TransportDTO з об'єкта Transport

@@ -3,8 +3,12 @@ package project.com.Service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.com.Entity.Client;
+import project.com.Entity.DTO.TransportDTO;
 import project.com.Entity.Transport;
 import project.com.Repository.TransportRepository;
+import project.com.Service.ClientService;
+import project.com.Service.CrewService;
 import project.com.Service.TransportService;
 
 import java.util.List;
@@ -19,9 +23,30 @@ public class TransportServiceImpl implements TransportService {
     @Autowired
     private TransportRepository transportRepository;
 
+    @Autowired
+    private CrewService crewService;
+
+    @Autowired
+    private ClientService clientService;
+
     @Override
-    public void createTransport(Transport transport) {
-        transportRepository.save(transport);
+    public Transport createTransport(TransportDTO transport) {
+        Transport newTransport = new Transport();
+
+        newTransport.setMileage(transport.getMileage());
+        newTransport.setModel(transport.getModel());
+        newTransport.setPhotoUrl(transport.getPhotoUrl());
+        newTransport.setProductionYear(transport.getProductionYear());
+
+        if (transport.getClientId() != null){
+            Client currentClient = clientService.findClientById(transport.getClientId());
+            if (currentClient == null) return null;
+            newTransport.setClient(currentClient);
+            currentClient.addTransport(newTransport);
+        }
+
+        transportRepository.save(newTransport);
+        return newTransport;
     }
 
     @Override

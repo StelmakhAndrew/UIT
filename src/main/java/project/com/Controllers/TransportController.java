@@ -82,9 +82,16 @@ public class TransportController {
      * @return створений транспорт.
      */
     @RequestMapping(value = "/newtransport", method = RequestMethod.POST)
-    public ResponseEntity<TransportDTO> addPerson(@RequestBody Transport transport) {
-        transportService.createTransport(transport);
-        TransportDTO transportDTO = new TransportDTO(transport);
-        return ResponseEntity.ok(transportDTO);
+    public ResponseEntity<TransportDTO> addPerson(@RequestBody TransportDTO transport) {
+
+        if (transport == null) return ResponseEntity.notFound().build();
+
+        Transport newTransport = transportService.createTransport(transport);
+
+        if (newTransport == null) return ResponseEntity.notFound().build();
+
+        transport = new TransportDTO(newTransport);
+
+        return ResponseEntity.ok(transport);
     }
 }

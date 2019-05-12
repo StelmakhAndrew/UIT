@@ -1,6 +1,7 @@
 package project.com.Service;
 
 import org.springframework.stereotype.Service;
+import project.com.Entity.DTO.PersonDTO;
 import project.com.Entity.Flight;
 import project.com.Entity.Person;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 public interface PersonService {
 
-    void createPerson(Person person);
+    Person createPerson(PersonDTO person);
 
     void updatePerson(Person person);
 

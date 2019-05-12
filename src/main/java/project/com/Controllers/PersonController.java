@@ -1,5 +1,6 @@
 package project.com.Controllers;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -84,9 +85,16 @@ public class PersonController {
      * @return створена персона.
      */
     @RequestMapping(value = "/newperson", method = RequestMethod.POST)
-    public ResponseEntity<PersonDTO> addPerson(@RequestBody Person person) {
-        personService.createPerson(person);
-        PersonDTO personDTO = new PersonDTO(person);
-        return ResponseEntity.ok(personDTO);
+    public ResponseEntity<PersonDTO> addPerson(@RequestBody PersonDTO person) {
+
+        if (person == null) return ResponseEntity.notFound().build();
+
+        Person newPerson =  personService.createPerson(person);
+
+        if (newPerson == null) return ResponseEntity.notFound().build();
+
+        person = new PersonDTO(newPerson);
+
+        return ResponseEntity.ok(person);
     }
 }

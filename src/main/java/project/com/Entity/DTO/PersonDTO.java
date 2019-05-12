@@ -18,6 +18,8 @@ public class PersonDTO {
 
     private Long crewId;
 
+    public PersonDTO(){}
+
     /**
      * @param person
      * Конструктор для створення об'єкту PersonDTO з об'єкта Person

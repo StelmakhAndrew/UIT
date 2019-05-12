@@ -4,6 +4,7 @@ package project.com.Service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.com.Entity.Client;
+import project.com.Entity.Crew;
 import project.com.Entity.DTO.TransportDTO;
 import project.com.Entity.Transport;
 import project.com.Repository.TransportRepository;
@@ -43,6 +44,13 @@ public class TransportServiceImpl implements TransportService {
             if (currentClient == null) return null;
             newTransport.setClient(currentClient);
             currentClient.addTransport(newTransport);
+        }
+
+        if (transport.getCrewId() != null){
+            Crew currentCrew = crewService.findCrewById(transport.getCrewId());
+            if (currentCrew == null) return null;
+            newTransport.setCrew(currentCrew);
+            currentCrew.addTransport(newTransport);
         }
 
         transportRepository.save(newTransport);

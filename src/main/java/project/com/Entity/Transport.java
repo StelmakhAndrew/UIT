@@ -19,7 +19,7 @@ public class Transport {
      * Зв'язок багато до одного.
      * Означає, що декілька транспортів можуть бути в одному екіпажі.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn
     private Crew crew;
 
@@ -27,7 +27,7 @@ public class Transport {
      * Зв'язок багато до одного.
      * Означає, що декілька транспортів можуть бути в одного клієнта.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
 

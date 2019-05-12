@@ -23,6 +23,9 @@ public class ClientDTO {
 
     private List<Long> transportsId;
 
+    public ClientDTO() {
+    }
+
     public ClientDTO(Long id, String name) {
         this.name = name;
         this.id= id;
@@ -37,7 +40,7 @@ public class ClientDTO {
         this.id = client.getId();
         this.name = client.getName();
         this.crewsId = client.getCrews().stream().map(Crew::getId).collect(Collectors.toList());
-        this.transportsId = client.getTransports().stream().map(Transport::getId).collect(Collectors.toList());;
+        this.transportsId = client.getTransports().stream().map(Transport::getId).collect(Collectors.toList());
     }
 
     public Long getId() {

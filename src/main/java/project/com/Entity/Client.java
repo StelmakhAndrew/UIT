@@ -1,5 +1,7 @@
 package project.com.Entity;
 
+import project.com.Entity.DTO.ClientDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

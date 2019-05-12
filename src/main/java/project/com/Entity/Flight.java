@@ -22,7 +22,7 @@ public class Flight {
      * Зв'язок один до одного.
      * Означає, що екіпаж може мати тільки один маршрут.
      */
-    @OneToOne(mappedBy = "flight",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "flight",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Crew crew;
 
     public Flight() {

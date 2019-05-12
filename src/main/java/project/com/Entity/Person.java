@@ -25,7 +25,7 @@ public class Person {
      * Зв'язок багато до одного.
      * Означає, що декілька персон можуть бути в одному екіпажі.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "crew_id")
     private Crew crew;
 

@@ -12,6 +12,7 @@ import project.com.Service.ClientService;
 import project.com.Service.CrewService;
 import project.com.Service.TransportService;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * Клас який містить методи для керуванням об'єктами "клієнт".
  */
 @Controller
+@RequestMapping("/clients")
 public class ClientController {
 
     @Autowired
@@ -36,8 +38,8 @@ public class ClientController {
      * Метод який дістає всіх клієнтів, які містяться в базі даних
      * @return список всіх клієнтів в форматі Json
      */
-    @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public ResponseEntity<List<ClientDTO>> getAllClient() {
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<ClientDTO>> getAllClient(@RequestParam(name = "test") String test) {
         List<ClientDTO> clientsDTO = clientService.findAllClient().stream().map(ClientDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(clientsDTO);
     }
@@ -47,7 +49,7 @@ public class ClientController {
      * Метод для отримання клієнта по його параметру id
      * @return Об'єкт "клієнт" в форматі Json
      */
-    @RequestMapping(value = "/clients/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<ClientDTO> getClient(@PathVariable("id") Long id) {
         Client client = clientService.findClientById(id);
         if (client == null)
@@ -61,7 +63,7 @@ public class ClientController {
      * Метод для видалення клієнта по id з бази даних
      * @return статус
      */
-    @RequestMapping(value = "/clients/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<ClientDTO> deleteClient(@PathVariable("id") Long id) {
         Client client = clientService.findClientById(id);
         if (client == null)
@@ -76,7 +78,7 @@ public class ClientController {
      * Метод для оновлення клієнта
      * @return оновлене значення клієнта.
      */
-    @RequestMapping(value = "/clients/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ClientDTO> updateClient(@RequestBody Client client, @PathVariable Long id) {
         Client oldClient = clientService.findClientById(id);
         if (oldClient == null) {
@@ -93,23 +95,31 @@ public class ClientController {
      * Метод для додавання клієнта в базу даних.
      * @return створений клієнт
      */
-    @RequestMapping(value = "/addClient", method = RequestMethod.POST)
-    public ResponseEntity<ClientDTO> addClient(@RequestBody Client client) {
+    @RequestMapping(value = "/newclient", method = RequestMethod.POST)
+    public ResponseEntity<ClientDTO> addClient(@RequestBody ClientDTO client) {
+
         if (client == null) return ResponseEntity.noContent().build();
-        clientService.createClient(client);
-        ClientDTO clientDTO = new ClientDTO(client);
-        return ResponseEntity.ok(clientDTO);
+
+        Client newClient = clientService.createClient(client);
+
+        if (newClient == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        client = new ClientDTO(newClient);
+
+        return ResponseEntity.ok(client);
     }
 
     /**
      * @param crewId - id існуючого екіпажу
-     * @param id - id поточного клієнта
+     * @param clientId - id поточного клієнта
      * Метод для пов'язування існуючого екіпажу з даним клієнтом.
      * @return поточний клієнт з позначеним зв'язком з екіпажем.
      */
-    @RequestMapping(value = "/clients/{id}/crew/{crewId}", method = RequestMethod.PUT)
-    public ResponseEntity<ClientDTO> addCrewToClient(@PathVariable Long crewId, @PathVariable Long id) {
-        Client client = clientService.findClientById(id);
+    @RequestMapping(value = "/connectcrew", method = RequestMethod.PUT)
+    public ResponseEntity<ClientDTO> addCrewToClient(@RequestParam(name = "crewId") Long crewId, @RequestParam(name = "clientId") Long clientId) {
+        Client client = clientService.findClientById(clientId);
         Crew crew = crewService.findCrewById(crewId);
         if (client == null || crew == null) {
             return ResponseEntity.notFound().build();
@@ -124,13 +134,13 @@ public class ClientController {
 
     /**
      * @param transportId - id існуючого транспорту
-     * @param id - id поточного клієнта
+     * @param clientId - id поточного клієнта
      * Метод для пов'язування існуючого транспорту з даним клієнтом.
      * @return поточний клієнт з позначеним зв'язком з транспортом.
      */
-    @RequestMapping(value = "/clients/{id}/transport/{transportId}", method = RequestMethod.PUT)
-    public ResponseEntity<ClientDTO> addTransportToClient(@PathVariable Long transportId, @PathVariable Long id) {
-        Client client = clientService.findClientById(id);
+    @RequestMapping(value = "/connecttransport", method = RequestMethod.PUT)
+    public ResponseEntity<ClientDTO> addTransportToClient(@RequestParam(name = "transportId") Long transportId, @RequestParam(name = "clientId") Long clientId) {
+        Client client = clientService.findClientById(clientId);
         Transport transport = transportService.findTransportById(transportId);
         if (client == null || transport == null) {
             return ResponseEntity.notFound().build();

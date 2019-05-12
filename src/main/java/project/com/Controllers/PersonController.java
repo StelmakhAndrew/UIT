@@ -70,6 +70,7 @@ public class PersonController {
         if (oldPerson == null) {
             return ResponseEntity.notFound().build();
         } else {
+            person.setId(id);
             personService.updatePerson(person);
             PersonDTO personDTO = new PersonDTO(person);
             return ResponseEntity.ok(personDTO);

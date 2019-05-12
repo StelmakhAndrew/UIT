@@ -39,7 +39,7 @@ public class ClientController {
      * @return список всіх клієнтів в форматі Json
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ClientDTO>> getAllClient(@RequestParam(name = "test") String test) {
+    public ResponseEntity<List<ClientDTO>> getAllClient() {
         List<ClientDTO> clientsDTO = clientService.findAllClient().stream().map(ClientDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(clientsDTO);
     }

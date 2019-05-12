@@ -24,6 +24,9 @@ public class CrewDTO {
 
     private Long clientId;
 
+    public CrewDTO() {
+    }
+
     /**
      * @param crew
      * Конструктор для створення об'єкту CrewDTO з об'єкта Crew

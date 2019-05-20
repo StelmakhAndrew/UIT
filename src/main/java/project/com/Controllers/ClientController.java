@@ -98,7 +98,7 @@ public class ClientController {
      *               Метод для додавання клієнта в базу даних.
      * @return створений клієнт
      */
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/newclient", method = RequestMethod.POST)
     public ResponseEntity<ClientDTO> addClient(@RequestBody ClientDTO client) {
 
         if (client == null) return ResponseEntity.noContent().build();

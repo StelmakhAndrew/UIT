@@ -20,16 +20,11 @@ import java.util.Optional;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-    private final FlightRepository flightRepository;
-
-
-    private final CrewService crewService;
+    @Autowired
+    private FlightRepository flightRepository;
 
     @Autowired
-    public FlightServiceImpl(FlightRepository flightRepository, CrewService crewService) {
-        this.flightRepository = flightRepository;
-        this.crewService = crewService;
-    }
+    private CrewService crewService;
 
 
     @Override

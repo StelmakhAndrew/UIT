@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import project.com.Entity.Client;
+import project.com.Entity.Crew;
 import project.com.Service.ClientService;
+import project.com.Service.CrewService;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,7 +35,10 @@ public class ApplicationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ClientService mockRepository;
+    private ClientService mockClientService;
+
+    @MockBean
+    private CrewService mockCrewService;
 
     /**
      * Метод який запускається перед виконанням кожного тесту
@@ -44,7 +49,11 @@ public class ApplicationTest {
         Client client = new Client();
         client.setName("for Testing");
         client.setId(1L);
-        when(mockRepository.findClientById(1L)).thenReturn(client);
+
+        Crew crew = new Crew();
+        crew.setId(1L);
+        when(mockClientService.findClientById(1L)).thenReturn(client);
+        when(mockCrewService.findCrewById(1L)).thenReturn(crew);
     }
 
     /**
@@ -72,7 +81,7 @@ public class ApplicationTest {
      */
     @Test
     public void shouldAddCrewToClient() throws Exception {
-        this.mockMvc.perform(put("/clients/1/crew/1")).andExpect(status().isOk());
+        this.mockMvc.perform(put("/clients/connectcrew?crewId=1&clientId=1")).andExpect(status().isOk());
     }
 
     /**
@@ -81,13 +90,13 @@ public class ApplicationTest {
      */
     @Test
     public void shouldCreateAndRemoveClient() throws Exception {
-        this.mockMvc.perform(post("/addClient")
+        this.mockMvc.perform(post("/newclient")
                 .content(testerJsonObjectClient)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(print()).andDo(mvcResult -> jsonClient = mvcResult.getResponse().getContentAsString());
 
         long idTesterClient = Long.parseLong(jsonClient.substring(jsonClient.indexOf(":") + 1, jsonClient.indexOf(",")));
         System.out.println();
-        this.mockMvc.perform(delete("/clients/delete/{id}", idTesterClient)).andExpect(status().isOk());
+        this.mockMvc.perform(delete("/clients/{id}", idTesterClient)).andExpect(status().isOk());
     }
 }

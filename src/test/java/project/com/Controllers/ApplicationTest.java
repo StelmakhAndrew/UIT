@@ -90,7 +90,7 @@ public class ApplicationTest {
      */
     @Test
     public void shouldCreateAndRemoveClient() throws Exception {
-        this.mockMvc.perform(post("/newclient")
+        this.mockMvc.perform(post("/clients")
                 .content(testerJsonObjectClient)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andDo(print()).andDo(mvcResult -> jsonClient = mvcResult.getResponse().getContentAsString());
